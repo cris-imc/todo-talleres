@@ -2,7 +2,7 @@
  * TABLA DE POSICIONES — Liga Profesional 2026
  * ════════════════════════════════════════════════════════════════
  * Datos actualizados automáticamente desde promiedos.com.ar
- * Última actualización: sábado, 7 de marzo de 2026, 04:12 a. m.
+ * Última actualización: sábado, 7 de marzo de 2026, 05:15 a. m.
  * Script: npm run scrape
  * ════════════════════════════════════════════════════════════════
  */

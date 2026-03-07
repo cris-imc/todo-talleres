@@ -176,30 +176,47 @@ const FixtureModal: React.FC<{ onClose: () => void; fixture: CMSPartido[] }> = (
                     const compLabel = isCMS ? (COMPETENCIA_LABELS[(p as CMSPartido).competencia] ?? (p as CMSPartido).competencia) : (p as any).competencia
                     const codigo = (p as CMSPartido).codigoRival ?? (p as any).codigo ?? '??'
                     const cond = p.condicion
-                    const color = (p as any).color ?? '#1A2D45'
+                    const color = (p as CMSPartido).colorRival ?? (p as any).color ?? '#1A2D45'
+                    const escudoUrl = (p as CMSPartido).escudoRival?.url ?? null
+                    // Helper: renderiza el escudo del rival (con imagen o fallback texto)
+                    const RivalCrest = () => escudoUrl
+                        ? <div style={{ width: 32, height: 32, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <img src={escudoUrl} alt={p.rival} style={{ width: 22, height: 22, objectFit: 'contain', display: 'block' }} />
+                        </div>
+                        : <div style={{ width: 32, height: 32, flexShrink: 0, borderRadius: '50%', background: color, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                            <span style={{ fontSize: 8, fontWeight: 900, color: 'white' }}>{codigo}</span>
+                        </div>
                     return (
-                        <div key={p.id} style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '12px 20px', borderBottom: '1px solid rgba(255,255,255,0.05)', background: i % 2 === 0 ? 'rgba(255,255,255,0.015)' : 'transparent' }}>
-                            <div style={{ minWidth: 80, textAlign: 'center' }}>
+                        <div key={p.id} style={{ display: 'grid', gridTemplateColumns: '72px 1fr auto 1fr 80px', alignItems: 'center', gap: 10, padding: '11px 20px', borderBottom: '1px solid rgba(255,255,255,0.05)', background: i % 2 === 0 ? 'rgba(255,255,255,0.015)' : 'transparent' }}>
+                            {/* Fecha */}
+                            <div style={{ textAlign: 'center' }}>
                                 <p style={{ fontFamily: 'var(--font-display)', fontSize: 12, fontWeight: 700, color: 'white' }}>{fechaStr}</p>
                                 <p style={{ fontSize: 10, color: '#7A94B0', marginTop: 2 }}>{horaStr} hs</p>
                             </div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flex: 1, justifyContent: cond === 'local' ? 'flex-end' : 'flex-start' }}>
-                                {cond === 'local' && <span style={{ fontFamily: 'var(--font-display)', fontSize: 13, fontWeight: 700, color: 'white' }}>CAT</span>}
-                                <div style={{ width: 30, height: 30, borderRadius: '50%', background: cond === 'local' ? '#001030' : color, border: `2px solid ${cond === 'local' ? '#003087' : color}`, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', padding: 2 }}>
-                                    {cond === 'local' ? <Image src="/images/escudo.png" alt="CAT" width={24} height={24} /> : <span style={{ fontSize: 8, fontWeight: 900, color: 'white' }}>{codigo}</span>}
-                                </div>
+                            {/* Equipo izquierdo */}
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 8 }}>
+                                <span style={{ fontFamily: 'var(--font-display)', fontSize: 12, fontWeight: 700, color: cond === 'local' ? 'white' : '#C8D8EC', textAlign: 'right' }}>
+                                    {cond === 'local' ? 'CAT' : p.rival}
+                                </span>
+                                {cond === 'local'
+                                    ? <div style={{ width: 32, height: 32, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Image src="/images/escudo.png" alt="CAT" width={28} height={28} style={{ objectFit: 'contain', display: 'block', maxWidth: 28, maxHeight: 28 }} /></div>
+                                    : <RivalCrest />}
                             </div>
-                            <div style={{ fontFamily: 'var(--font-display)', fontSize: 14, fontWeight: 900, color: '#FF6B00', flexShrink: 0 }}>VS</div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flex: 1, justifyContent: cond === 'visitante' ? 'flex-end' : 'flex-start' }}>
-                                <div style={{ width: 30, height: 30, borderRadius: '50%', background: cond === 'visitante' ? '#001030' : color, border: `2px solid ${cond === 'visitante' ? '#003087' : color}`, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', padding: 2 }}>
-                                    {cond === 'visitante' ? <Image src="/images/escudo.png" alt="CAT" width={24} height={24} /> : <span style={{ fontSize: 8, fontWeight: 900, color: 'white' }}>{codigo}</span>}
-                                </div>
-                                {cond === 'visitante' && <span style={{ fontFamily: 'var(--font-display)', fontSize: 13, fontWeight: 700, color: 'white' }}>CAT</span>}
-                                {cond === 'local' && <span style={{ fontFamily: 'var(--font-display)', fontSize: 13, fontWeight: 700, color: '#C8D8EC' }}>{p.rival}</span>}
+                            {/* VS */}
+                            <div style={{ fontFamily: 'var(--font-display)', fontSize: 13, fontWeight: 900, color: '#FF6B00', textAlign: 'center' }}>VS</div>
+                            {/* Equipo derecho */}
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: 8 }}>
+                                {cond === 'visitante'
+                                    ? <div style={{ width: 32, height: 32, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Image src="/images/escudo.png" alt="CAT" width={28} height={28} style={{ objectFit: 'contain', display: 'block', maxWidth: 28, maxHeight: 28 }} /></div>
+                                    : <RivalCrest />}
+                                <span style={{ fontFamily: 'var(--font-display)', fontSize: 12, fontWeight: 700, color: cond === 'visitante' ? 'white' : '#C8D8EC' }}>
+                                    {cond === 'visitante' ? 'CAT' : p.rival}
+                                </span>
                             </div>
-                            <div style={{ minWidth: 80, textAlign: 'right' }}>
-                                <span style={{ display: 'inline-block', fontFamily: 'var(--font-display)', fontSize: 9, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '2px 7px', borderRadius: 3, background: cond === 'local' ? '#003087' : '#1A2D45', color: cond === 'local' ? '#7AB3FF' : '#7A94B0' }}>
-                                    {cond === 'local' ? 'Local' : 'Visitante'}
+                            {/* Badge condición */}
+                            <div style={{ textAlign: 'right' }}>
+                                <span style={{ display: 'inline-block', fontFamily: 'var(--font-display)', fontSize: 8, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '2px 6px', borderRadius: 3, background: cond === 'local' ? '#003087' : '#1A2D45', color: cond === 'local' ? '#7AB3FF' : '#7A94B0' }}>
+                                    {cond === 'local' ? 'Local' : 'Visit.'}
                                 </span>
                                 <p style={{ fontSize: 9, color: '#2A4060', marginTop: 3 }}>{compLabel}</p>
                             </div>
@@ -336,17 +353,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ nextMatch, fixture = [] }) => 
                         {/* Local */}
                         {match.condicion === 'local' ? (
                             <div style={{ textAlign: 'center', flex: 1 }}>
-                                <div style={{ width: 40, height: 40, borderRadius: '50%', background: '#001030', border: '2px solid #003087', margin: '0 auto 5px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', padding: 3 }}>
-                                    <Image src="/images/escudo.png" alt="Talleres" width={30} height={30} />
+                                <div style={{ width: 40, height: 40, margin: '0 auto 5px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <Image src="/images/escudo.png" alt="Talleres" width={38} height={38} style={{ objectFit: 'contain', display: 'block' }} />
                                 </div>
                                 <p style={{ fontFamily: 'var(--font-display)', fontSize: 10, fontWeight: 700, textTransform: 'uppercase', color: 'white' }}>CAT</p>
                                 <p style={{ fontSize: 8, color: '#7A94B0', marginTop: 1 }}>Local</p>
                             </div>
                         ) : (
                             <div style={{ textAlign: 'center', flex: 1 }}>
-                                <div style={{ width: 40, height: 40, borderRadius: '50%', background: rivalColor, border: `2px solid ${rivalColor}`, margin: '0 auto 5px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', padding: rivalEscudoUrl ? 3 : 0 }}>
+                                <div style={{ width: 40, height: 40, margin: '0 auto 5px', display: 'flex', alignItems: 'center', justifyContent: 'center', ...(rivalEscudoUrl ? {} : { borderRadius: '50%', background: rivalColor, border: `2px solid ${rivalColor}`, overflow: 'hidden' }) }}>
                                     {rivalEscudoUrl
-                                        ? <img src={rivalEscudoUrl} alt={match.rival} style={{ width: 30, height: 30, objectFit: 'contain' }} />
+                                        ? <img src={rivalEscudoUrl} alt={match.rival} style={{ width: 36, height: 36, objectFit: 'contain' }} />
                                         : <span style={{ fontFamily: 'var(--font-display)', fontSize: 10, fontWeight: 900, color: 'white' }}>{rivalCode}</span>
                                     }
                                 </div>
@@ -360,17 +377,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ nextMatch, fixture = [] }) => 
                         {/* Visitante */}
                         {match.condicion === 'visitante' ? (
                             <div style={{ textAlign: 'center', flex: 1 }}>
-                                <div style={{ width: 40, height: 40, borderRadius: '50%', background: '#001030', border: '2px solid #003087', margin: '0 auto 5px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', padding: 3 }}>
-                                    <Image src="/images/escudo.png" alt="Talleres" width={30} height={30} />
+                                <div style={{ width: 40, height: 40, margin: '0 auto 5px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <Image src="/images/escudo.png" alt="Talleres" width={38} height={38} style={{ objectFit: 'contain', display: 'block' }} />
                                 </div>
                                 <p style={{ fontFamily: 'var(--font-display)', fontSize: 10, fontWeight: 700, textTransform: 'uppercase', color: 'white' }}>CAT</p>
                                 <p style={{ fontSize: 8, color: '#7A94B0', marginTop: 1 }}>Visitante</p>
                             </div>
                         ) : (
                             <div style={{ textAlign: 'center', flex: 1 }}>
-                                <div style={{ width: 40, height: 40, borderRadius: '50%', background: rivalColor, border: `2px solid ${rivalColor}`, margin: '0 auto 5px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', padding: rivalEscudoUrl ? 3 : 0 }}>
+                                <div style={{ width: 40, height: 40, margin: '0 auto 5px', display: 'flex', alignItems: 'center', justifyContent: 'center', ...(rivalEscudoUrl ? {} : { borderRadius: '50%', background: rivalColor, border: `2px solid ${rivalColor}`, overflow: 'hidden' }) }}>
                                     {rivalEscudoUrl
-                                        ? <img src={rivalEscudoUrl} alt={match.rival} style={{ width: 30, height: 30, objectFit: 'contain' }} />
+                                        ? <img src={rivalEscudoUrl} alt={match.rival} style={{ width: 36, height: 36, objectFit: 'contain' }} />
                                         : <span style={{ fontFamily: 'var(--font-display)', fontSize: 10, fontWeight: 900, color: 'white' }}>{rivalCode}</span>
                                     }
                                 </div>

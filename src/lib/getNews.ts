@@ -23,7 +23,7 @@ export interface CMSNoticia {
 }
 
 // Convierte una noticia del CMS al formato interno NewsItem (con fallbacks)
-function cmsToNewsItem(n: CMSNoticia, index: number): NewsItem {
+function cmsToNewsItem(n: CMSNoticia, index: number): NewsItem & { imageUrl: string | null } {
     const gradients = [
         'linear-gradient(135deg, #001844 0%, #003087 50%, #0044BB 100%)',
         'linear-gradient(135deg, #1a1000 0%, #332200 50%, #FF6B00 100%)',

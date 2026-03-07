@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import Link from 'next/link'
 import Image from 'next/image'
 import type { CMSPartido } from '../lib/matchTypes'
@@ -67,19 +68,61 @@ const fixtureDataMock = [
     { id: 5, rival: 'Independiente', condicion: 'local', fecha: 'Dom 13 Abr', hora: '18:00', competencia: 'Liga Prof.', codigo: 'IND', color: '#FF0000' },
 ]
 
-// ── Modal genérico ──
-const Modal: React.FC<{ title: string; onClose: () => void; children: React.ReactNode }> = ({ title, onClose, children }) => (
-    <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(6px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
-        <div onClick={e => e.stopPropagation()} style={{ background: '#080F1D', border: '1px solid #1A2D45', borderTop: '3px solid #FF6B00', borderRadius: 12, width: '100%', maxWidth: 580, maxHeight: '88vh', overflowY: 'auto', boxShadow: '0 32px 80px rgba(0,0,0,0.8)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 20px', borderBottom: '1px solid #1A2D45', position: 'sticky', top: 0, background: '#080F1D', zIndex: 1 }}>
-                <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 15, fontWeight: 900, textTransform: 'uppercase', letterSpacing: 1.5, color: 'white' }}>{title}</h2>
-                <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#7A94B0', fontSize: 20, padding: 4, lineHeight: 1, transition: 'color .2s' }}
-                    onMouseOver={e => e.currentTarget.style.color = '#FF6B00'} onMouseOut={e => e.currentTarget.style.color = '#7A94B0'}>✕</button>
+// ── Modal genérico (Portal → se renderiza fuera del sidebar) ──
+const Modal: React.FC<{ title: string; onClose: () => void; children: React.ReactNode }> = ({ title, onClose, children }) => {
+    const [mounted, setMounted] = useState(false)
+    useEffect(() => { setMounted(true) }, [])
+    if (!mounted) return null
+
+    return createPortal(
+        <div onClick={onClose} style={{
+            position: 'fixed', inset: 0, zIndex: 99999,
+            background: 'rgba(4, 10, 24, 0.75)',
+            backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: 24,
+        }}>
+            <div onClick={e => e.stopPropagation()} style={{
+                background: 'linear-gradient(180deg, #0A1628 0%, #060E1A 100%)',
+                border: '1px solid rgba(255,107,0,0.15)',
+                borderTop: '3px solid #FF6B00',
+                borderRadius: 14,
+                width: '100%', maxWidth: 580, maxHeight: '85vh',
+                overflowY: 'auto',
+                boxShadow: '0 0 40px rgba(255,107,0,0.08), 0 24px 60px rgba(0,0,0,0.6)',
+                scrollbarWidth: 'thin',
+                scrollbarColor: '#1A2D45 transparent',
+            }}>
+                {/* Header sticky */}
+                <div style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                    padding: '16px 22px',
+                    borderBottom: '1px solid rgba(255,107,0,0.1)',
+                    position: 'sticky', top: 0,
+                    background: 'linear-gradient(180deg, #0A1628 0%, #0A1628 90%, transparent 100%)',
+                    zIndex: 1,
+                }}>
+                    <h2 style={{
+                        fontFamily: 'var(--font-display)', fontSize: 15, fontWeight: 900,
+                        textTransform: 'uppercase', letterSpacing: 1.5, color: 'white',
+                    }}>{title}</h2>
+                    <button onClick={onClose} style={{
+                        background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
+                        borderRadius: 6, cursor: 'pointer', color: '#7A94B0',
+                        fontSize: 16, width: 32, height: 32,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        transition: 'all .2s',
+                    }}
+                        onMouseOver={e => { e.currentTarget.style.color = '#FF6B00'; e.currentTarget.style.borderColor = '#FF6B00'; e.currentTarget.style.background = 'rgba(255,107,0,0.1)' }}
+                        onMouseOut={e => { e.currentTarget.style.color = '#7A94B0'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.background = 'rgba(255,255,255,0.05)' }}
+                    >✕</button>
+                </div>
+                {children}
             </div>
-            {children}
-        </div>
-    </div>
-)
+        </div>,
+        document.body
+    )
+}
 
 // ── Modal tabla completa ──
 const FullTableModal: React.FC<{ tab: Tab; onClose: () => void }> = ({ tab, onClose }) => {
@@ -90,7 +133,7 @@ const FullTableModal: React.FC<{ tab: Tab; onClose: () => void }> = ({ tab, onCl
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
                     <tr style={{ background: '#060E1A' }}>
-                        {['#', 'Equipo', 'PJ', 'PG', 'PE', 'PP', 'GF', 'GC', 'PTS', 'DIF'].map(h => (
+                        {['#', 'Equipo', 'PJ', 'PG', 'PE', 'PP', 'GF', 'GC', 'PTS', tab === 'Promedios' ? 'PROM' : 'DIF'].map(h => (
                             <th key={h} style={{ fontFamily: 'var(--font-display)', fontSize: 9, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', color: '#FF6B00', padding: '8px 10px', textAlign: 'left' }}>{h}</th>
                         ))}
                     </tr>
@@ -252,7 +295,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ nextMatch, fixture = [] }) => 
                     <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                         <thead>
                             <tr style={{ background: '#060E1A' }}>
-                                {['#', 'Equipo', 'PJ', 'PTS', 'DIF'].map(h => (
+                                {['#', 'Equipo', 'PJ', 'PTS', activeTab === 'Promedios' ? 'PROM' : 'DIF'].map(h => (
                                     <th key={h} style={{ fontFamily: 'var(--font-display)', fontSize: 8, fontWeight: 700, letterSpacing: 1.2, textTransform: 'uppercase', color: '#FF6B00', padding: '6px 7px', textAlign: 'left' }}>{h}</th>
                                 ))}
                             </tr>

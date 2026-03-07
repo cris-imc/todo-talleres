@@ -57,3 +57,8 @@ node_modules/
 
 # Seed images
 /public/seed-*.png
+
+# Scraper debug files (generados por npm run scrape)
+/scripts/_promiedos_*.json
+/scripts/_promiedos_*.txt
+/scripts/_tables_*.json

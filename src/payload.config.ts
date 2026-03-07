@@ -9,6 +9,7 @@ import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Noticias } from './collections/Noticias'
 import { Partidos } from './collections/Partidos'
+import { Suscriptores } from './collections/Suscriptores'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -20,7 +21,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Noticias, Partidos],
+  collections: [Users, Media, Noticias, Partidos, Suscriptores],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || 'talleres-secret-2026-cat',
   typescript: {

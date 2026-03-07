@@ -71,6 +71,7 @@ export interface Config {
     media: Media;
     noticias: Noticia;
     partidos: Partido;
+    suscriptores: Suscriptore;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -82,6 +83,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     noticias: NoticiasSelect<false> | NoticiasSelect<true>;
     partidos: PartidosSelect<false> | PartidosSelect<true>;
+    suscriptores: SuscriptoresSelect<false> | SuscriptoresSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -238,6 +240,19 @@ export interface Partido {
   createdAt: string;
 }
 /**
+ * Emails de hinchas suscritos al Newsletter para recibir nuevas noticias.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "suscriptores".
+ */
+export interface Suscriptore {
+  id: number;
+  email: string;
+  origen?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -276,6 +291,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'partidos';
         value: number | Partido;
+      } | null)
+    | ({
+        relationTo: 'suscriptores';
+        value: number | Suscriptore;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -399,6 +418,16 @@ export interface PartidosSelect<T extends boolean = true> {
   escudoRival?: T;
   codigoRival?: T;
   colorRival?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "suscriptores_select".
+ */
+export interface SuscriptoresSelect<T extends boolean = true> {
+  email?: T;
+  origen?: T;
   updatedAt?: T;
   createdAt?: T;
 }

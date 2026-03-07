@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -11,6 +11,35 @@ const sections = [
 ]
 
 export const Footer: React.FC = () => {
+    const [subEmail, setSubEmail] = useState('')
+    const [subStatus, setSubStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+    const [subMsg, setSubMsg] = useState('')
+
+    const handleSubscribe = async (e: React.FormEvent) => {
+        e.preventDefault()
+        if (!subEmail || !subEmail.includes('@')) return
+        setSubStatus('loading')
+        try {
+            const res = await fetch('/api/suscribir', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: subEmail })
+            })
+            const data = await res.json()
+            if (res.ok) {
+                setSubStatus('success')
+                setSubMsg(data.message || '¡Gracias por suscribirte!')
+                setSubEmail('')
+            } else {
+                setSubStatus('error')
+                setSubMsg(data.error || 'Ocurrió un error')
+            }
+        } catch {
+            setSubStatus('error')
+            setSubMsg('Error de red')
+        }
+    }
+
     return (
         <footer style={{
             background: '#030810',
@@ -95,32 +124,40 @@ export const Footer: React.FC = () => {
                         <p style={{ fontSize: 12, color: '#7A94B0', marginBottom: 14, lineHeight: 1.6 }}>
                             Recibí las últimas novedades del club en tu email.
                         </p>
-                        <form onSubmit={e => e.preventDefault()} style={{ display: 'flex', gap: 0 }}>
+                        <form id="newsletter" onSubmit={handleSubscribe} style={{ display: 'flex', gap: 0 }}>
                             <input
                                 type="email"
+                                value={subEmail}
+                                onChange={e => setSubEmail(e.target.value)}
+                                disabled={subStatus === 'loading' || subStatus === 'success'}
                                 placeholder="Tu dirección de email"
                                 style={{
                                     flex: 1, background: '#0B1929', border: '1px solid #1A2D45',
                                     borderRight: 'none', borderRadius: '6px 0 0 6px',
                                     padding: '9px 12px', color: 'white', fontSize: 12,
                                     outline: 'none', fontFamily: 'var(--font-body)',
+                                    opacity: subStatus === 'loading' ? 0.7 : 1,
                                 }}
                                 onFocus={e => e.currentTarget.style.borderColor = '#FF6B00'}
                                 onBlur={e => e.currentTarget.style.borderColor = '#1A2D45'}
                             />
-                            <button type="submit" style={{
-                                background: '#FF6B00', color: 'white', border: 'none',
+                            <button type="submit" disabled={subStatus === 'loading' || subStatus === 'success'} style={{
+                                background: subStatus === 'success' ? '#22c55e' : '#FF6B00', color: 'white', border: 'none',
                                 borderRadius: '0 6px 6px 0', padding: '9px 16px',
                                 fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 11,
-                                letterSpacing: 1, textTransform: 'uppercase', cursor: 'pointer',
+                                letterSpacing: 1, textTransform: 'uppercase', cursor: subStatus === 'success' ? 'default' : 'pointer',
                                 transition: 'background .2s',
+                                opacity: subStatus === 'loading' ? 0.7 : 1,
                             }}
-                                onMouseOver={e => e.currentTarget.style.background = '#CC5200'}
-                                onMouseOut={e => e.currentTarget.style.background = '#FF6B00'}
+                                onMouseOver={e => { if (subStatus !== 'success') e.currentTarget.style.background = '#CC5200' }}
+                                onMouseOut={e => { if (subStatus !== 'success') e.currentTarget.style.background = '#FF6B00' }}
                             >
-                                Suscribir
+                                {subStatus === 'loading' ? '⏳' : subStatus === 'success' ? '✔' : 'Suscribir'}
                             </button>
                         </form>
+                        {subStatus !== 'idle' && (
+                            <p style={{ marginTop: 8, fontSize: 11, color: subStatus === 'error' ? '#ef4444' : '#22c55e', fontWeight: 600 }}>{subMsg}</p>
+                        )}
                     </div>
                 </div>
 

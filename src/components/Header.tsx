@@ -162,20 +162,29 @@ export const Header: React.FC<HeaderProps> = ({ tickerNews }) => {
                     </div>
 
                     {/* Botón Suscribirse */}
-                    <button style={{
-                        background: '#FF6B00',
-                        color: 'white',
-                        fontFamily: 'var(--font-display)',
-                        fontWeight: 700,
-                        fontSize: 12,
-                        letterSpacing: 1,
-                        textTransform: 'uppercase',
-                        padding: '9px 20px',
-                        borderRadius: 6,
-                        border: 'none',
-                        cursor: 'pointer',
-                        transition: 'background .2s, transform .2s',
-                    }}
+                    <button
+                        onClick={() => {
+                            setMobileOpen(false)
+                            const el = document.getElementById('newsletter')
+                            if (el) {
+                                el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+                                el.querySelector('input')?.focus()
+                            }
+                        }}
+                        style={{
+                            background: '#FF6B00',
+                            color: 'white',
+                            fontFamily: 'var(--font-display)',
+                            fontWeight: 700,
+                            fontSize: 12,
+                            letterSpacing: 1,
+                            textTransform: 'uppercase',
+                            padding: '9px 20px',
+                            borderRadius: 6,
+                            border: 'none',
+                            cursor: 'pointer',
+                            transition: 'background .2s, transform .2s',
+                        }}
                         onMouseOver={e => { e.currentTarget.style.background = '#CC5200'; e.currentTarget.style.transform = 'translateY(-1px)' }}
                         onMouseOut={e => { e.currentTarget.style.background = '#FF6B00'; e.currentTarget.style.transform = 'translateY(0)' }}
                     >

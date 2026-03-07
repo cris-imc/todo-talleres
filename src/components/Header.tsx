@@ -129,13 +129,15 @@ export const Header: React.FC<HeaderProps> = ({ tickerNews }) => {
                         </div>
                     </Link>
 
-                    {/* Nav links — desktop */}
+                    {/* Nav links */}
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                         {([
                             { label: 'Inicio', href: '/' },
                             { label: 'Noticias', href: pathname === '/' ? '#ultimas-noticias' : '/noticias' },
+                            { label: 'Historia', href: '/institucional/historia' },
+                            { label: 'Estatuto', href: '/institucional/estatuto' },
                         ] as const).map(({ label, href }) => {
-                            const isActive = pathname === '/' ? label === 'Inicio' : pathname.startsWith('/noticias') && label === 'Noticias'
+                            const isActive = pathname === '/' ? label === 'Inicio' : (label === 'Noticias' && pathname.startsWith('/noticias')) || pathname === href
                             return (
                                 <Link
                                     key={label}

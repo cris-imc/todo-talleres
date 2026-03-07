@@ -1,17 +1,31 @@
 import React from 'react'
+import { Barlow_Condensed, DM_Sans } from 'next/font/google'
 import './styles.css'
 
+const barlowCondensed = Barlow_Condensed({
+  subsets: ['latin'],
+  weight: ['400', '600', '700', '800', '900'],
+  variable: '--font-display',
+})
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  style: ['normal', 'italic'],
+  variable: '--font-body',
+})
+
 export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+  title: 'Talleres de Córdoba — Web Oficial',
+  description: 'Sitio web oficial del Club Atlético Talleres de Córdoba. Desde 1913.',
 }
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
 
   return (
-    <html lang="en">
-      <body>
+    <html lang="es" className={`${barlowCondensed.variable} ${dmSans.variable}`}>
+      <body className="font-body text-white bg-navy antialiased">
         <main>{children}</main>
       </body>
     </html>

@@ -48,3 +48,12 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# Base de datos local Payload
+*.db
+
+# Media uploads locales
+/media/
+
+# Seed images
+/public/seed-*.png

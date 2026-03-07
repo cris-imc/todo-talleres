@@ -1,164 +1,166 @@
-:root {
-  --font-mono: 'Roboto Mono', monospace;
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════
+   TALLERES WEB — DESIGN SYSTEM TOKENS
+   Tailwind v4 — usa @theme para customizar
+═══════════════════════════════════════ */
+@theme {
+  /* Colores */
+  --color-navy: #06101E;
+  --color-blue-deep: #001030;
+  --color-blue: #003087;
+  --color-blue-med: #0044BB;
+  --color-blue-light: #1565C0;
+  --color-orange: #FF6B00;
+  --color-orange-dk: #CC5200;
+  --color-gray-lt: #C8D8EC;
+  --color-gray-med: #7A94B0;
+  --color-gray-dk: #1A2D45;
+  --color-card-bg: #0B1929;
+  --color-card-bg2: #0E2040;
+
+  /* Tipografías */
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+
+  /* Animaciones */
+  --animate-fadeUp: fadeUp 0.6s ease forwards;
+  --animate-fadeIn: fadeIn 0.6s ease forwards;
+  --animate-slideRight: slideRight 0.6s ease forwards;
+  --animate-glow: glow 3s ease infinite;
+  --animate-tickerScroll: tickerScroll 30s linear infinite;
+  --animate-badgePop: badgePop 0.5s ease forwards;
+  --animate-shieldFloat: shieldFloat 5s ease-in-out infinite;
+
+  /* Keyframes */
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideRight {
+    from {
+      opacity: 0;
+      transform: translateX(-24px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes glow {
+
+    0%,
+    100% {
+      box-shadow: 0 0 14px #FF6B0055;
+    }
+
+    50% {
+      box-shadow: 0 0 32px #FF6B00AA;
+    }
+  }
+
+  @keyframes tickerScroll {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes badgePop {
+    0% {
+      transform: scale(0.7);
+      opacity: 0;
+    }
+
+    80% {
+      transform: scale(1.08);
+    }
+
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes shieldFloat {
+
+    0%,
+    100% {
+      transform: translateY(0) rotate(-1deg);
+    }
+
+    50% {
+      transform: translateY(-6px) rotate(1deg);
+    }
+  }
 }
 
-* {
+/* ═══════════════════════════════════════
+   BASE RESET
+═══════════════════════════════════════ */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html {
-  font-size: 18px;
-  line-height: 32px;
-
-  background: rgb(0, 0, 0);
-  -webkit-font-smoothing: antialiased;
-}
-
-html,
-body,
-#app {
-  height: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
-  font-family: system-ui;
-  font-size: 18px;
-  line-height: 32px;
-
-  margin: 0;
-  color: rgb(1000, 1000, 1000);
-
-  @media (max-width: 1024px) {
-    font-size: 15px;
-    line-height: 24px;
-  }
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-h1 {
-  margin: 40px 0;
-  font-size: 64px;
-  line-height: 70px;
-  font-weight: bold;
-
-  @media (max-width: 1024px) {
-    margin: 24px 0;
-    font-size: 42px;
-    line-height: 42px;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 38px;
-    line-height: 38px;
-  }
-
-  @media (max-width: 400px) {
-    font-size: 32px;
-    line-height: 32px;
-  }
-}
-
-p {
-  margin: 24px 0;
-
-  @media (max-width: 1024px) {
-    margin: calc(var(--base) * 0.75) 0;
-  }
+  background-color: var(--color-navy);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
-  color: currentColor;
-
-  &:focus {
-    opacity: 0.8;
-    outline: none;
-  }
-
-  &:active {
-    opacity: 0.7;
-    outline: none;
-  }
+  color: inherit;
+  text-decoration: none;
 }
 
-svg {
-  vertical-align: middle;
+img {
+  display: block;
+  width: 100%;
 }
 
-.home {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  height: 100vh;
-  padding: 45px;
-  max-width: 1024px;
-  margin: 0 auto;
-  overflow: hidden;
+/* Reveal utility para IntersectionObserver */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
 
-  @media (max-width: 400px) {
-    padding: 24px;
-  }
-
-  .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
-
-    h1 {
-      text-align: center;
-    }
-  }
-
-  .links {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    a {
-      text-decoration: none;
-      padding: 0.25rem 0.5rem;
-      border-radius: 4px;
-    }
-
-    .admin {
-      color: rgb(0, 0, 0);
-      background: rgb(1000, 1000, 1000);
-      border: 1px solid rgb(0, 0, 0);
-    }
-
-    .docs {
-      color: rgb(1000, 1000, 1000);
-      background: rgb(0, 0, 0);
-      border: 1px solid rgb(1000, 1000, 1000);
-    }
-  }
-
-  .footer {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-
-    @media (max-width: 1024px) {
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    p {
-      margin: 0;
-    }
-
-    .codeLink {
-      text-decoration: none;
-      padding: 0 0.5rem;
-      background: rgb(60, 60, 60);
-      border-radius: 4px;
-    }
-  }
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
 }

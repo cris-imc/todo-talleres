@@ -69,7 +69,7 @@ export const Header: React.FC<HeaderProps> = ({ tickerNews }) => {
             <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 999 }}>
 
                 {/* ── Topbar ── */}
-                <div style={{
+                <div className="max-md:hidden" style={{
                     background: '#03080F',
                     borderBottom: '1px solid #0D2040',
                     height: 34,
@@ -130,7 +130,7 @@ export const Header: React.FC<HeaderProps> = ({ tickerNews }) => {
                     </Link>
 
                     {/* Nav links */}
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <div className="hidden md:flex items-center">
                         {([
                             { label: 'Inicio', href: '/' },
                             { label: 'Noticias', href: pathname === '/' ? '#ultimas-noticias' : '/noticias' },
@@ -163,6 +163,7 @@ export const Header: React.FC<HeaderProps> = ({ tickerNews }) => {
 
                     {/* Botón Suscribirse */}
                     <button
+                        className="hidden md:block"
                         onClick={() => {
                             setMobileOpen(false)
                             const el = document.getElementById('newsletter')
@@ -243,6 +244,50 @@ export const Header: React.FC<HeaderProps> = ({ tickerNews }) => {
 
             {/* Espaciador: topbar(34) + navbar(68) + ticker(32) = 134px */}
             <div style={{ height: 134 }} aria-hidden="true" />
+
+            {/* ── Menú Mobile Dropdown ── */}
+            {mobileOpen && (
+                <div style={{
+                    position: 'fixed', top: 100, left: 0, right: 0,
+                    background: 'rgba(0,16,48,0.98)', backdropFilter: 'blur(16px)',
+                    borderBottom: '2px solid #FF6B00', padding: '24px', zIndex: 998,
+                    display: 'flex', flexDirection: 'column', gap: 16,
+                    boxShadow: '0 10px 40px rgba(0,0,0,0.8)'
+                }}>
+                    {([
+                        { label: 'Inicio', href: '/' },
+                        { label: 'Noticias', href: pathname === '/' ? '#ultimas-noticias' : '/noticias' },
+                        { label: 'Historia', href: '/institucional/historia' },
+                        { label: 'Estatuto', href: '/institucional/estatuto' },
+                    ] as const).map(({ label, href }) => (
+                        <Link key={label} href={href} onClick={label === 'Noticias' ? handleNoticiasClick : () => setMobileOpen(false)} style={{
+                            fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 700, letterSpacing: 1.5,
+                            textTransform: 'uppercase', color: 'white', padding: '12px 0', borderBottom: '1px solid rgba(255,255,255,0.1)'
+                        }}>
+                            {label}
+                        </Link>
+                    ))}
+                    <button onClick={() => {
+                        setMobileOpen(false)
+                        const el = document.getElementById('newsletter')
+                        if (el) {
+                            el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+                            el.querySelector('input')?.focus()
+                        }
+                    }} style={{
+                        background: '#FF6B00', color: 'white', fontFamily: 'var(--font-display)', fontWeight: 700,
+                        fontSize: 16, letterSpacing: 1.5, textTransform: 'uppercase', padding: '16px', borderRadius: 8,
+                        border: 'none', cursor: 'pointer', marginTop: 8
+                    }}>
+                        Suscribirse al Newsletter
+                    </button>
+                    <div style={{ display: 'flex', gap: 16, marginTop: 12, justifyContent: 'center' }}>
+                        {['X', 'IG', 'YT', 'FB'].map(sn => (
+                            <span key={sn} style={{ color: '#7A94B0', fontSize: 13 }}>{sn}</span>
+                        ))}
+                    </div>
+                </div>
+            )}
 
             <style>{`
         @media (max-width: 768px) {

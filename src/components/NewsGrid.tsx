@@ -48,7 +48,7 @@ export const NewsGrid: React.FC<NewsGridProps> = ({ news }) => {
         card.imageUrl ? undefined : card.gradient ?? gradients[i % gradients.length]
 
     return (
-        <div style={{ padding: '24px 28px 32px' }}>
+        <div className="px-4 py-6 md:px-7 md:pb-8" style={{}}>
 
             {/* ── Filtros ── */}
             <div style={{
@@ -83,11 +83,7 @@ export const NewsGrid: React.FC<NewsGridProps> = ({ news }) => {
 
             {/* ── Tarjetas medianas ── */}
             {filteredMedium.length > 0 && (
-                <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: filteredMedium.length === 1 ? '1fr' : '1fr 1fr',
-                    gap: 14, marginBottom: 14,
-                }}>
+                <div className={`grid gap-[14px] mb-[14px] ${filteredMedium.length === 1 ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'}`}>
                     {filteredMedium.map((card, i) => (
                         <article key={card.id} style={{
                             position: 'relative', height: 180, borderRadius: 10,
@@ -129,10 +125,8 @@ export const NewsGrid: React.FC<NewsGridProps> = ({ news }) => {
 
             {/* ── Tarjetas pequeñas ── */}
             {filteredSmall.length > 0 && (
-                <div style={{
-                    display: 'grid',
+                <div className="grid gap-[14px] mt-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-auto-fill-200" style={{
                     gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-                    gap: 14, marginTop: 24,
                 }}>
                     {filteredSmall.map((card, i) => (
                         <article key={card.id} style={{

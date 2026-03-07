@@ -46,7 +46,7 @@ export const Footer: React.FC = () => {
             borderTop: '3px solid #FF6B00',
             paddingTop: 48,
         }}>
-            <div style={{ maxWidth: 1440, margin: '0 auto', padding: '0 32px' }}>
+            <div className="px-5 md:px-8" style={{ maxWidth: 1440, margin: '0 auto' }}>
                 <div style={{
                     display: 'grid',
                     gridTemplateColumns: '200px 1fr 1fr 1fr 260px',

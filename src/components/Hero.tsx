@@ -115,7 +115,7 @@ export const Hero: React.FC<HeroProps> = ({ featured }) => {
             </div>
 
             {/* ── Contenido ── */}
-            <div style={{
+            <div className="max-md:px-5 max-md:pb-8" style={{
                 position: 'relative', zIndex: 2, height: '100%',
                 display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
                 padding: '0 36px 40px', maxWidth: 700,
@@ -162,8 +162,8 @@ export const Hero: React.FC<HeroProps> = ({ featured }) => {
                 </div>
 
                 {/* Botones */}
-                <div style={{ display: 'flex', gap: 12 }}>
-                    <Link href={`/noticias/${news.slug}`} style={{
+                <div className="flex flex-col sm:flex-row gap-3">
+                    <Link href={`/noticias/${news.slug}`} className="justify-center" style={{
                         display: 'inline-flex', alignItems: 'center',
                         background: '#FF6B00', color: 'white',
                         fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 12,
@@ -177,7 +177,7 @@ export const Hero: React.FC<HeroProps> = ({ featured }) => {
                     >
                         Leer Nota Completa →
                     </Link>
-                    <Link href="/noticias" style={{
+                    <Link href="/noticias" className="justify-center" style={{
                         display: 'inline-flex', alignItems: 'center',
                         background: 'rgba(255,255,255,0.07)',
                         border: '1px solid rgba(255,255,255,0.2)',

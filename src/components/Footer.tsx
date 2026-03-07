@@ -6,8 +6,8 @@ import Image from 'next/image'
 
 const sections = [
     { title: 'Secciones', color: '#FF6B00', links: [{ label: 'Inicio', href: '/' }, { label: 'Noticias', href: '/noticias' }] },
-    { title: 'Institucional', color: '#FF6B00', links: [{ label: 'Historia', href: '#' }, { label: 'Autoridades', href: '#' }, { label: 'Estatuto', href: '#' }] },
-    { title: 'Contacto', color: '#FF6B00', links: [{ label: 'Sede Social', href: '#' }, { label: 'Centro de Alto Rendimiento', href: '#' }, { label: 'Prensa', href: '#' }] },
+    { title: 'Institucional', color: '#FF6B00', links: [{ label: 'Historia', href: '/institucional/historia' }, { label: 'Autoridades', href: '/institucional/autoridades' }, { label: 'Estatuto', href: '/institucional/estatuto' }] },
+    { title: 'Contacto', color: '#FF6B00', links: [{ label: 'Sede Social', href: '/institucional/sede-social' }, { label: 'Centro de Alto Rendimiento', href: '/institucional/car' }, { label: 'Prensa', href: '/institucional/prensa' }, { label: 'Contacto', href: '/institucional/contacto' }] },
 ]
 
 export const Footer: React.FC = () => {

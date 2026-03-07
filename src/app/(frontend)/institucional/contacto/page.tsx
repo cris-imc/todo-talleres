@@ -74,7 +74,7 @@ export default function ContactoPage() {
                     <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 900, textTransform: 'uppercase', color: 'white', letterSpacing: 1, marginBottom: 8 }}>Escribinos</h2>
                     <p style={{ fontSize: 14, color: '#C8D8EC', marginBottom: 24 }}>Completá el formulario y nos pondremos en contacto a la brevedad.</p>
 
-                    <form style={{ display: 'grid', gap: 16 }} onSubmit={e => e.preventDefault()}>
+                    <form style={{ display: 'grid', gap: 16 }}>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
                             <div>
                                 <label style={{ display: 'block', fontSize: 11, fontFamily: 'var(--font-display)', fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', color: '#7A94B0', marginBottom: 6 }}>Nombre Completo</label>
@@ -109,11 +109,11 @@ export default function ContactoPage() {
                         </div>
 
                         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 8 }}>
-                            <button type="submit" style={{
+                            <button type="button" style={{
                                 background: '#FF6B00', color: 'white', border: 'none', padding: '14px 28px', borderRadius: 8,
                                 fontSize: 14, fontFamily: 'var(--font-display)', fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase',
                                 cursor: 'pointer', transition: 'background .2s'
-                            }} onMouseOver={e => e.currentTarget.style.background = '#CC5200'} onMouseOut={e => e.currentTarget.style.background = '#FF6B00'}>
+                            }}>
                                 Enviar Mensaje
                             </button>
                         </div>

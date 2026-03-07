@@ -26,6 +26,20 @@ export const Header: React.FC<HeaderProps> = ({ tickerNews }) => {
     const [mobileOpen, setMobileOpen] = useState(false)
     const pathname = usePathname()
 
+    // Fecha dinámica
+    const formatDate = () => {
+        const now = new Date()
+        const dias = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
+        const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+        return `${dias[now.getDay()]} ${now.getDate()} ${meses[now.getMonth()]}`
+    }
+    const [currentDate, setCurrentDate] = useState('')
+    useEffect(() => {
+        setCurrentDate(formatDate())
+        const id = setInterval(() => setCurrentDate(formatDate()), 60_000)
+        return () => clearInterval(id)
+    }, [])
+
     const handleNoticiasClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
         if (pathname === '/') {
             e.preventDefault()
@@ -57,7 +71,7 @@ export const Header: React.FC<HeaderProps> = ({ tickerNews }) => {
                     fontSize: 11,
                     color: '#7A94B0',
                 }}>
-                    <span>📅 Vie 06 Mar • Córdoba, Argentina</span>
+                    <span>📅 {currentDate} • Córdoba, Argentina</span>
                     <div style={{ display: 'flex', gap: 18 }}>
                         {['X/Twitter', 'Instagram', 'YouTube', 'Facebook'].map(sn => (
                             <Link key={sn} href="#" style={{ color: '#7A94B0', fontSize: 11, transition: 'color .2s' }}

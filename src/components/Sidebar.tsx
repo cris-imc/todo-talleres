@@ -258,6 +258,20 @@ export const Sidebar: React.FC<SidebarProps> = ({ nextMatch, fixture = [] }) => 
     const rivalEscudoUrl = match.escudoRival?.url ?? null
     const rivalCode = match.codigoRival ?? match.rival.substring(0, 3).toUpperCase()
     const countdown = useCountdown(matchDate)
+
+    // Detectar si el partido está en juego (desde el inicio hasta 2 horas después)
+    const [isLive, setIsLive] = useState(false)
+    useEffect(() => {
+        const check = () => {
+            const now = Date.now()
+            const start = matchDate.getTime()
+            setIsLive(now >= start && now < start + 2 * 60 * 60 * 1000)
+        }
+        check()
+        const id = setInterval(check, 15_000)
+        return () => clearInterval(id)
+    }, [matchDate])
+
     const rows = tabsData[activeTab]
 
     // Filas compactas: máx 6, pero siempre incluye Talleres
@@ -338,9 +352,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ nextMatch, fixture = [] }) => 
 
                 {/* ─── Próximo Partido ─── */}
                 <div style={{ padding: '14px 12px', background: 'linear-gradient(to bottom, #050D1A, #081525)' }}>
-                    <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 10, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', color: '#FF6B00', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
-                        🗓 Próximo Partido
-                        <span style={{ flex: 1, height: 1, background: 'linear-gradient(to right, #FF6B00, transparent)' }} />
+                    <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 10, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', color: isLive ? '#ef4444' : '#FF6B00', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
+                        {isLive ? '⚡ Partido en Curso' : '🗓 Próximo Partido'}
+                        <span style={{ flex: 1, height: 1, background: `linear-gradient(to right, ${isLive ? '#ef4444' : '#FF6B00'}, transparent)` }} />
                     </h3>
 
                     {/* Competencia */}
@@ -401,15 +415,31 @@ export const Sidebar: React.FC<SidebarProps> = ({ nextMatch, fixture = [] }) => 
                         {matchFechaStr} · {matchHoraStr} hs · {match.estadio ?? 'Mario A. Kempes, Córdoba'}
                     </p>
 
-                    {/* Countdown */}
-                    <div style={{ display: 'flex', justifyContent: 'center', gap: 6, marginTop: 10 }}>
-                        {[{ val: countdown.d, label: 'Días' }, { val: countdown.h, label: 'Hrs' }, { val: countdown.m, label: 'Min' }, { val: countdown.s, label: 'Seg' }].map(({ val, label }) => (
-                            <div key={label} style={{ textAlign: 'center' }}>
-                                <span style={{ display: 'block', background: '#001030', border: '1px solid #003087', borderRadius: 3, fontFamily: 'var(--font-display)', fontSize: 16, fontWeight: 900, color: '#FF6B00', padding: '3px 6px', minWidth: 28 }}>{val}</span>
-                                <span style={{ display: 'block', fontSize: 7, color: '#7A94B0', textTransform: 'uppercase', letterSpacing: 0.8, marginTop: 2 }}>{label}</span>
+                    {/* Countdown o EN JUEGO */}
+                    {isLive ? (
+                        <div style={{ marginTop: 10, textAlign: 'center' }}>
+                            <div style={{
+                                display: 'inline-flex', alignItems: 'center', gap: 8,
+                                background: 'rgba(239,68,68,0.12)',
+                                border: '1px solid rgba(239,68,68,0.4)',
+                                borderRadius: 8, padding: '10px 18px',
+                                animation: 'livePulse 1.5s ease-in-out infinite',
+                            }}>
+                                <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#ef4444', display: 'inline-block', animation: 'liveDot 1.5s ease-in-out infinite' }} />
+                                <span style={{ fontFamily: 'var(--font-display)', fontSize: 14, fontWeight: 900, letterSpacing: 2, color: '#ef4444', textTransform: 'uppercase' }}>En Juego</span>
+                                <span style={{ fontFamily: 'var(--font-display)', fontSize: 11, fontWeight: 700, color: 'rgba(239,68,68,0.7)', letterSpacing: 1 }}>· LIVE</span>
                             </div>
-                        ))}
-                    </div>
+                        </div>
+                    ) : (
+                        <div style={{ display: 'flex', justifyContent: 'center', gap: 6, marginTop: 10 }}>
+                            {[{ val: countdown.d, label: 'Días' }, { val: countdown.h, label: 'Hrs' }, { val: countdown.m, label: 'Min' }, { val: countdown.s, label: 'Seg' }].map(({ val, label }) => (
+                                <div key={label} style={{ textAlign: 'center' }}>
+                                    <span style={{ display: 'block', background: '#001030', border: '1px solid #003087', borderRadius: 3, fontFamily: 'var(--font-display)', fontSize: 16, fontWeight: 900, color: '#FF6B00', padding: '3px 6px', minWidth: 28 }}>{val}</span>
+                                    <span style={{ display: 'block', fontSize: 7, color: '#7A94B0', textTransform: 'uppercase', letterSpacing: 0.8, marginTop: 2 }}>{label}</span>
+                                </div>
+                            ))}
+                        </div>
+                    )}
 
                     {/* Botón Fixture — abre modal */}
                     <button onClick={() => setShowFixture(true)} style={{

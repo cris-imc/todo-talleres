@@ -29,8 +29,9 @@ export default buildConfig({
   },
   db: sqliteAdapter({
     client: {
-      // Base de datos SQLite local — no requiere servidor externo
-      url: `file:${path.resolve(dirname, '..', 'talleres.db')}`,
+      url: process.env.NODE_ENV === 'production'
+        ? 'file:/var/data/talleres.db'
+        : `file:${path.resolve(dirname, '..', 'talleres.db')}`,
     },
   }),
   sharp,

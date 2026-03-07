@@ -20,6 +20,7 @@
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
   },
   "dependencies": {
+    "@libsql/linux-x64-musl": "^0.5.22",
     "@payloadcms/db-postgres": "3.79.0",
     "@payloadcms/db-sqlite": "^3.79.0",
     "@payloadcms/next": "3.79.0",

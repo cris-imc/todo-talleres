@@ -33,10 +33,19 @@ export const Header: React.FC<HeaderProps> = ({ tickerNews }) => {
         const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
         return `${dias[now.getDay()]} ${now.getDate()} ${meses[now.getMonth()]}`
     }
+    const formatTime = () => {
+        const now = new Date()
+        return `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`
+    }
     const [currentDate, setCurrentDate] = useState('')
+    const [currentTime, setCurrentTime] = useState('')
     useEffect(() => {
         setCurrentDate(formatDate())
-        const id = setInterval(() => setCurrentDate(formatDate()), 60_000)
+        setCurrentTime(formatTime())
+        const id = setInterval(() => {
+            setCurrentDate(formatDate())
+            setCurrentTime(formatTime())
+        }, 1000)
         return () => clearInterval(id)
     }, [])
 
@@ -71,7 +80,13 @@ export const Header: React.FC<HeaderProps> = ({ tickerNews }) => {
                     fontSize: 11,
                     color: '#7A94B0',
                 }}>
-                    <span>📅 {currentDate} • Córdoba, Argentina</span>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <span>📅 {currentDate}</span>
+                        <span style={{ color: '#1A2D45' }}>|</span>
+                        <span style={{ fontFamily: 'var(--font-display)', fontWeight: 700, letterSpacing: 1, color: '#FF6B00', fontSize: 12 }}>🕐 {currentTime}</span>
+                        <span style={{ color: '#1A2D45' }}>|</span>
+                        <span>Córdoba, Argentina</span>
+                    </span>
                     <div style={{ display: 'flex', gap: 18 }}>
                         {['X/Twitter', 'Instagram', 'YouTube', 'Facebook'].map(sn => (
                             <Link key={sn} href="#" style={{ color: '#7A94B0', fontSize: 11, transition: 'color .2s' }}

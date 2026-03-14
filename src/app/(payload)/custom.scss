@@ -1,47 +1,50 @@
-/* Fix de scroll en Modales/Drawers y Galería de Payload UI en dispositivos móviles */
+/* Fix Definitivo de Scroll y Tablas en Payload UI para Celulares */
 @media (max-width: 768px) {
-  /* Habilita el desplazamiento nativo en toda la ventana lateral que se abre */
-  .drawer,
+  
+  /* 1. Modal / Radix Dialog / Drawer global reset */
+  [role="dialog"],
+  [data-state="open"],
+  .drawer, 
   .drawer__content,
-  .modal,
-  .modal__content,
-  [class*="drawer__scroll"],
-  [class*="window"],
-  .list-controls,
-  .collection-list {
+  .drawer__scroll-container,
+  .modal__content {
     -webkit-overflow-scrolling: touch !important;
     overflow-y: auto !important;
-    overscroll-behavior-y: contain !important; /* evita que arrastre el fondo */
-    touch-action: pan-y pinch-zoom !important;
-  }
-
-  /* El Drawer suele salir del DOM de forma fija, garantizamos comportamiento local */
-  .drawer__content {
-    max-height: 100vh !important;
-    height: 100% !important;
-  }
-
-  /* Prevenimos que el overlay / drag and drop intercepte el deslizar del dedo */
-  .dropzone {
-    pointer-events: none !important;
-  }
-  .dropzone * {
+    touch-action: pan-y !important;
+    overscroll-behavior-y: contain !important;
     pointer-events: auto !important;
   }
-  
-  /* Arreglo de lentitud / lag al hacer scroll en grids pesadas (como la galería de medios) */
-  .media-library, 
-  .media-library * {
-    will-change: transform, scroll-position !important;
-    transform: translateZ(0) !important;
+
+  /* 2. El listado de imágenes específico que enviaste (tabla, filas, wrappers virtuales) */
+  .table-wrapper,
+  .table-layout,
+  [class*="table"],
+  [class*="Table"],
+  .collection-list,
+  .collection-list__wrap,
+  [data-radix-scroll-area-viewport],
+  div[style*="overflow"] /* Algunos Virtualized grids inyectan el overflow inline */
+  {
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-x pan-y !important; /* Permitir X e Y explícitamente */
+    pointer-events: auto !important;
   }
 
-  /* Ocultar el scroll del body principal cuando hay un modal (Payload a veces lo hace a medias) */
-  body.modal-open,
-  body.drawer-open {
-    overflow: hidden !important;
-    position: fixed !important;
-    width: 100% !important;
-    height: 100% !important;
+  /* 3. Forzar eventos táctiles en las celdas y listas */
+  tr, td, th, table, tbody, li, ul, 
+  .cell, .row {
+    touch-action: manipulation !important;
+  }
+
+  /* 4. Evitar que las cajas arrastables rompan el scroll */
+  [draggable="true"],
+  .dropzone {
+    touch-action: pan-y !important;
+  }
+  
+  /* 5. Asegurar height correcto para que haya scroll (si no hacedor a 100vh se rompe) */
+  .drawer__content {
+    max-height: 100vh !important;
+    height: 100dvh !important;
   }
 }

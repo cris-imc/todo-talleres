@@ -1,0 +1,92 @@
+[
+  {
+    "dia": "15/03",
+    "condicion": "visitante",
+    "rival": "Belgrano",
+    "hora": "17:30"
+  },
+  {
+    "dia": "21/03",
+    "condicion": "visitante",
+    "rival": "Independiente",
+    "hora": "20:00"
+  },
+  {
+    "dia": "05/04",
+    "condicion": "local",
+    "rival": "Boca Jrs.",
+    "hora": "14:00"
+  },
+  {
+    "dia": "12/04",
+    "condicion": "visitante",
+    "rival": "Defensa",
+    "hora": "14:00"
+  },
+  {
+    "dia": "19/04",
+    "condicion": "local",
+    "rival": "Riestra",
+    "hora": "14:00"
+  },
+  {
+    "dia": "26/04",
+    "condicion": "visitante",
+    "rival": "Estudiantes",
+    "hora": "14:00"
+  },
+  {
+    "dia": "26/07",
+    "condicion": "visitante",
+    "rival": "Newell's",
+    "hora": "16:00"
+  },
+  {
+    "dia": "29/07",
+    "condicion": "local",
+    "rival": "Vélez",
+    "hora": "16:00"
+  },
+  {
+    "dia": "02/08",
+    "condicion": "visitante",
+    "rival": "Platense",
+    "hora": "16:00"
+  },
+  {
+    "dia": "09/08",
+    "condicion": "local",
+    "rival": "Lanús",
+    "hora": "16:00"
+  },
+  {
+    "dia": "16/08",
+    "condicion": "visitante",
+    "rival": "Gimnasia (M)",
+    "hora": "16:00"
+  },
+  {
+    "dia": "23/08",
+    "condicion": "local",
+    "rival": "Central",
+    "hora": "16:00"
+  },
+  {
+    "dia": "30/08",
+    "condicion": "local",
+    "rival": "Central Córdoba",
+    "hora": "16:00"
+  },
+  {
+    "dia": "06/09",
+    "condicion": "visitante",
+    "rival": "San Lorenzo",
+    "hora": "16:00"
+  },
+  {
+    "dia": "13/09",
+    "condicion": "local",
+    "rival": "Unión",
+    "hora": "16:00"
+  }
+]

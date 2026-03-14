@@ -41,7 +41,7 @@ const fixtureData = [
     { id: 6, rival: 'Estudiantes', condicion: 'visitante', fecha: 'Sáb 19 Abr', hora: '19:00', competencia: 'Liga Prof.', codigo: 'EST', color: '#FF8800', estado: 'proximo' },
 ]
 
-// Countdown con segundos
+// Countdown con segundos — SSR-safe: arranca con '--' y calcula en cliente
 function useCountdown(targetDate: Date) {
     const calc = () => {
         const diff = targetDate.getTime() - Date.now()
@@ -54,8 +54,14 @@ function useCountdown(targetDate: Date) {
             s: pad(Math.floor((diff % 60_000) / 1_000)),
         }
     }
-    const [t, setT] = useState(calc)
-    useEffect(() => { const id = setInterval(() => setT(calc()), 1000); return () => clearInterval(id) }, [])
+    // Estado inicial neutro — servidor y cliente renderizan lo mismo
+    const [t, setT] = useState({ d: '--', h: '--', m: '--', s: '--' })
+    useEffect(() => {
+        // Solo en el cliente: calcular y arrancar el intervalo
+        setT(calc())
+        const id = setInterval(() => setT(calc()), 1000)
+        return () => clearInterval(id)
+    }, [targetDate.getTime()])
     return t
 }
 

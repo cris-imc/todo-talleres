@@ -12,7 +12,7 @@ const noticias = [
         tamaño: 'medium' as const,
         destacada: false,
         resumen: 'El equipo de Vélez mostró su mejor fútbol ante un Huracán que no pudo con la intensidad albiazul. Cuatro goles que ilusionan de cara al campeonato.',
-        autor: 'Redacción TalleresWeb',
+        autor: 'Redacción Todo Talleres',
         tiempoLectura: 3,
     },
     {
@@ -32,7 +32,7 @@ const noticias = [
         tamaño: 'small' as const,
         destacada: false,
         resumen: 'El técnico de la Albiceleste llamó a tres jugadores del plantel cordobés para la próxima fecha FIFA.',
-        autor: 'Redacción TalleresWeb',
+        autor: 'Redacción Todo Talleres',
         tiempoLectura: 3,
     },
     {
@@ -52,7 +52,7 @@ const noticias = [
         tamaño: 'small' as const,
         destacada: false,
         resumen: 'Ya se vendieron más del 85% de las entradas disponibles. La barra popular agotó su sector en menos de dos horas.',
-        autor: 'Redacción TalleresWeb',
+        autor: 'Redacción Todo Talleres',
         tiempoLectura: 2,
     },
     {

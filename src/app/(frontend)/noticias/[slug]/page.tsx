@@ -155,7 +155,7 @@ export default async function NoticiaPage({ params }: { params: Promise<{ slug: 
                                 {noticia.autor?.[0]?.toUpperCase() ?? 'R'}
                             </div>
                             <div>
-                                <p style={{ fontWeight: 700, color: 'white', fontSize: 13 }}>{noticia.autor ?? 'Redacción TalleresWeb'}</p>
+                                <p style={{ fontWeight: 700, color: 'white', fontSize: 13 }}>{noticia.autor ?? 'Redacción Todo Talleres'}</p>
                                 <p style={{ fontSize: 11, color: '#7A94B0' }}>{fechaFormateada}</p>
                             </div>
                         </div>

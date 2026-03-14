@@ -1,0 +1,1 @@
+import { getPayloadClient } from '../src/lib/payload'; async function run() { const payload = await getPayloadClient(); const res = await payload.find({ collection: 'noticias', sort: '-createdAt', limit: 3 }); console.log(JSON.stringify(res.docs.map(d => ({id: d.id, titulo: d.titulo})), null, 2)); process.exit(0); } run().catch(console.error);

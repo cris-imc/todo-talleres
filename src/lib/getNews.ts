@@ -60,7 +60,7 @@ function cmsToNewsItem(n: CMSNoticia, index: number): NewsItem & { imageUrl: str
         size: n.tamaño ?? 'small',
         gradient: gradients[index % gradients.length],
         emoji: emojis[n.categoria] ?? '📰',
-        author: n.autor ?? 'Redacción TalleresWeb',
+        author: n.autor ?? 'Redacción Todo Talleres',
         timeAgo: elapsed(),
         readTime: n.tiempoLectura ?? 4,
         imageUrl: toAbsoluteUrl(n.imagen?.url),

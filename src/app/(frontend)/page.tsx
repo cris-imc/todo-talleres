@@ -42,7 +42,9 @@ export default async function HomePage() {
           <Hero featured={featured} />
 
           {/* Banner AdSense */}
-          <AdSlot name="Home - Top Banner" type="banner" />
+          <div style={{ padding: '0 28px' }} className="ad-slot-top">
+            <AdSlot name="Home - Top Banner" type="banner" />
+          </div>
 
           {/* Cabecera "Últimas Noticias" */}
           <div id="ultimas-noticias" className="ultimas-header flex items-center justify-between gap-2 flex-wrap" style={{

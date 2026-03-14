@@ -224,6 +224,12 @@ img {
     padding: 16px 14px 24px !important;
   }
 
+  /* Primer banner AdSense: mismo padding que las cards en mobile */
+  .ad-slot-top {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
   /* Header "Últimas Noticias": mismo padding lateral que las cards */
   .ultimas-header {
     padding-left: 14px !important;

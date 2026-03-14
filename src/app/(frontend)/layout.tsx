@@ -20,8 +20,8 @@ const dmSans = DM_Sans({
 })
 
 export const metadata = {
-  title: 'Talleres de Córdoba — Web Oficial',
-  description: 'Sitio web oficial del Club Atlético Talleres de Córdoba. Desde 1913.',
+  title: 'Talleres de Córdoba — Web NO Oficial',
+  description: 'Sitio web NO oficial del Club Atlético Talleres de Córdoba. Desde 1913.',
 }
 
 export default async function RootLayout(props: { children: React.ReactNode }) {

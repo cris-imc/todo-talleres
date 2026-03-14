@@ -53,9 +53,12 @@ export const Footer: React.FC = () => {
                         <div style={{ width: 48, height: 54, filter: 'drop-shadow(0 0 10px rgba(0,48,135,0.8))' }}>
                             <Image src="/images/escudo.png" alt="Club Atlético Talleres" width={48} height={54} />
                         </div>
-                        <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 900, textTransform: 'uppercase', letterSpacing: 1, marginTop: 14, marginBottom: 6, color: 'white' }}>
-                            Talleres de Córdoba
+                        <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 900, textTransform: 'uppercase', letterSpacing: 1, marginTop: 14, marginBottom: 2, color: 'white' }}>
+                            Todo Talleres
                         </h3>
+                        <span style={{ fontSize: 10, color: '#FF6B00', letterSpacing: 3, textTransform: 'uppercase', fontWeight: 500, display: 'block', marginBottom: 10 }}>
+                            Desde 1913
+                        </span>
                         <p style={{ fontSize: 12, color: '#7A94B0', lineHeight: 1.7, marginBottom: 18 }}>
                             El sitio web de los hincha albiazules. Toda la actualidad del club desde 1913.
                         </p>
@@ -165,7 +168,7 @@ export const Footer: React.FC = () => {
                 }}
                     className="sm:flex-row sm:items-center"
                 >
-                    <p>© {new Date().getFullYear()} Talleres Web — Sitio no oficial. Todos los derechos reservados.</p>
+                    <p>© {new Date().getFullYear()} Todo Talleres — Sitio no oficial. Todos los derechos reservados.</p>
                     <div style={{ display: 'flex', gap: 20 }}>
                         {['Política de Privacidad', 'Aviso Legal', 'Cookies'].map(l => (
                             <Link key={l} href="#" style={{ color: '#7A94B0', transition: 'color .2s' }}

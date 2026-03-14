@@ -113,7 +113,7 @@ export const Header: React.FC<HeaderProps> = ({ tickerNews }) => {
                         </div>
                         <div>
                             <span style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 900, letterSpacing: 1, textTransform: 'uppercase', lineHeight: 1, color: '#fff', display: 'block' }}>
-                                Talleres
+                                Todo Talleres
                             </span>
                             <span style={{ fontSize: 10, color: '#FF6B00', letterSpacing: 3, textTransform: 'uppercase', fontWeight: 500, display: 'block', marginTop: 2 }}>
                                 Desde 1913

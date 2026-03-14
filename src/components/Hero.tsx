@@ -49,7 +49,7 @@ const DEFAULT: NewsItem & { imageUrl: null } = {
     title: 'Bienvenidos al sitio oficial de Talleres',
     category: 'Institucional', size: 'hero',
     gradient: '', emoji: '⭐',
-    author: 'Redacción TalleresWeb',
+    author: 'Redacción Todo Talleres',
     timeAgo: 'Hoy', readTime: 1,
 }
 

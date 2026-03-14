@@ -52,7 +52,7 @@ export const Noticias: CollectionConfig = {
                     const toList = suscriptores.docs.map(s => ({ email: s.email as string }))
 
                     const emailBody = {
-                        sender: { name: 'Talleres Web', email: senderEmail },
+                        sender: { name: 'Todo Talleres', email: senderEmail },
                         to: toList,
                         subject: `📰 Nueva nota: ${doc.titulo}`,
                         htmlContent: `
@@ -71,7 +71,7 @@ export const Noticias: CollectionConfig = {
                                     </a>
                                 </div>
                                 <p style="color: #1A2D45; font-size: 11px; text-align: center; margin-top: 24px;">
-                                    Estás recibiendo este correo porque te suscribiste en Talleres Web.
+                                    Estás recibiendo este correo porque te suscribiste en Todo Talleres.
                                 </p>
                             </div>
                         `,
@@ -193,7 +193,7 @@ export const Noticias: CollectionConfig = {
             name: 'autor',
             type: 'text',
             label: 'Autor',
-            defaultValue: 'Redacción TalleresWeb',
+            defaultValue: 'Redacción Todo Talleres',
         },
         {
             name: 'tiempoLectura',

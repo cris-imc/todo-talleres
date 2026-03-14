@@ -22,13 +22,13 @@ const gradients = [
 // ── Noticia grande (hero de la página /noticias) ──
 export const HeroCard: React.FC<{ article: Article }> = ({ article }) => (
     <Link href={`/noticias/${article.slug}`}
-        style={{ display: 'block', marginBottom: 32, borderRadius: 14, overflow: 'hidden', position: 'relative', height: 420, cursor: 'pointer' }}>
+        style={{ display: 'block', marginBottom: 24, borderRadius: 14, overflow: 'hidden', position: 'relative', height: 'clamp(220px, 45vw, 420px)', cursor: 'pointer' }}>
         <div style={{ position: 'absolute', inset: 0, background: article.imageUrl ? undefined : (article.gradient ?? gradients[0]) }}>
             {article.imageUrl && <img src={article.imageUrl} alt={article.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(0,8,32,0.95) 0%, transparent 70%)' }} />
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,8,32,0.9) 0%, transparent 50%)' }} />
         </div>
-        <div style={{ position: 'relative', zIndex: 1, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '32px 36px' }}>
+        <div style={{ position: 'relative', zIndex: 1, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 'clamp(16px, 4vw, 36px)' }}>
             <span style={{
                 display: 'inline-block', marginBottom: 12, fontFamily: 'var(--font-display)',
                 fontSize: 10, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase',

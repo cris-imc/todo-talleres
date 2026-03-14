@@ -38,17 +38,14 @@ export default async function HomePage() {
       >
         {/* ── Columna izquierda: contenido ── */}
         <div className="main-content" style={{ flex: 1, minWidth: 0 }}>
+          {/* Hero: siempre de borde a borde */}
           <Hero featured={featured} />
 
           {/* Banner AdSense */}
           <AdSlot name="Home - Top Banner" type="banner" />
 
-          {/* Cabecera sección noticias — id para scroll desde navbar */}
-          <div id="ultimas-noticias" style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: '18px 28px',
+          {/* Cabecera "Últimas Noticias" */}
+          <div id="ultimas-noticias" className="ultimas-header flex items-center justify-between gap-2 flex-wrap" style={{
             borderBottom: '1px solid #1A2D45',
             scrollMarginTop: 140,
           }}>
@@ -77,15 +74,18 @@ export default async function HomePage() {
           <NewsGrid news={allNews} />
         </div>
 
-        {/* ── Columna derecha: sidebar sticky ── */}
+        {/* ── Columna derecha: sidebar fijo ── */}
         <div
           className="sidebar-col"
           style={{
-            width: 340, flexShrink: 0,
-            position: 'sticky', top: 134,
+            width: 340,
+            flexShrink: 0,
+            position: 'sticky',
+            top: 134,
             alignSelf: 'flex-start',
-            height: 'calc(100vh - 134px)',
-            overflowY: 'auto', overflowX: 'hidden',
+            maxHeight: 'calc(100vh - 134px)',
+            overflowY: 'auto',
+            overflowX: 'hidden',
             scrollbarWidth: 'thin',
             scrollbarColor: '#1A2D45 transparent',
           }}
@@ -96,13 +96,6 @@ export default async function HomePage() {
 
       <Footer />
 
-      {/* Responsive */}
-      <style>{`
-        @media (max-width: 900px) {
-          .main-layout { flex-direction: column !important; }
-          .sidebar-col { width: 100% !important; position: relative !important; top: 0 !important; height: auto !important; }
-        }
-      `}</style>
     </>
   )
 }

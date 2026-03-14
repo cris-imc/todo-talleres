@@ -2,8 +2,9 @@
 
 import React, { useState, useMemo } from 'react'
 import Link from 'next/link'
+import NextImage from 'next/image'
 import { AdSlot } from './AdSlot'
-import { mediumNews as mockMedium, smallNews as mockSmall } from '../data/mockNews'
+import { mockNews } from '../data/mockNews'
 import type { NewsItem } from '../data/mockNews'
 
 type NewsItemEx = NewsItem & { imageUrl?: string | null }
@@ -26,29 +27,26 @@ const gradients = [
 export const NewsGrid: React.FC<NewsGridProps> = ({ news }) => {
     const [activeCategory, setActiveCategory] = useState('Todas')
 
-    // Noticias para la grilla: excluimos la hero del CMS
-    // Si después de excluirla no queda nada → fallback a los mock
+    // Noticias para la grilla: excluimos solo la hero para no duplicarla.
+    // Mostramos todos los artículos del CMS sin discriminar por size.
+    // Si el CMS está vacío → fallback a los mock.
     const allNews: NewsItemEx[] = useMemo(() => {
-        if (!news || news.length === 0) return [...mockMedium, ...mockSmall]
+        if (!news || news.length === 0) return mockNews.filter(n => n.size !== 'hero').map(n => ({ ...n, imageUrl: null }))
         const nonHero = news.filter(n => n.size !== 'hero')
-        return nonHero.length > 0 ? nonHero : [...mockMedium, ...mockSmall]
+        return nonHero.length > 0 ? nonHero : mockNews.filter(n => n.size !== 'hero').map(n => ({ ...n, imageUrl: null }))
     }, [news])
 
-    const mediumCards = allNews.filter(n => n.size === 'medium')
-    const smallCards = allNews.filter(n => n.size === 'small')
+    const filteredCards = activeCategory === 'Todas'
+        ? allNews
+        : allNews.filter(n => n.category === activeCategory)
 
-    const filtered = (arr: NewsItemEx[]) =>
-        activeCategory === 'Todas' ? arr : arr.filter(n => n.category === activeCategory)
-
-    const filteredMedium = filtered(mediumCards)
-    const filteredSmall = filtered(smallCards)
-    const noResults = filteredMedium.length === 0 && filteredSmall.length === 0
+    const noResults = filteredCards.length === 0
 
     const cardBg = (card: NewsItemEx, i: number) =>
         card.imageUrl ? undefined : card.gradient ?? gradients[i % gradients.length]
 
     return (
-        <div className="px-4 py-6 md:px-7 md:pb-8" style={{}}>
+        <div className="news-grid-inner">
 
             {/* ── Filtros ── */}
             <div style={{
@@ -81,54 +79,13 @@ export const NewsGrid: React.FC<NewsGridProps> = ({ news }) => {
                 </div>
             )}
 
-            {/* ── Tarjetas medianas ── */}
-            {filteredMedium.length > 0 && (
-                <div className={`grid gap-[14px] mb-[14px] ${filteredMedium.length === 1 ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'}`}>
-                    {filteredMedium.map((card, i) => (
-                        <article key={card.id} style={{
-                            position: 'relative', height: 180, borderRadius: 10,
-                            overflow: 'hidden', cursor: 'pointer',
-                            background: cardBg(card, i),
-                            boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
-                            transition: 'transform .3s, box-shadow .3s',
-                        }}
-                            onMouseOver={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 16px 40px rgba(0,0,0,0.6)' }}
-                            onMouseOut={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)' }}
-                        >
-                            {/* Imagen real si existe */}
-                            {card.imageUrl && (
-                                <img src={card.imageUrl} alt={card.title}
-                                    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-                            )}
-                            <div style={{ position: 'absolute', inset: 0, opacity: 0.04, backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
-                            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.94) 0%, transparent 65%)' }} />
-                            <div style={{ position: 'absolute', right: 16, top: 12, fontSize: 64, opacity: 0.08, userSelect: 'none' }}>{card.emoji}</div>
-                            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '14px 16px', zIndex: 1 }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-                                    <span style={{ fontFamily: 'var(--font-display)', fontSize: 9, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', color: '#FF6B00' }}>
-                                        {card.category}
-                                    </span>
-                                    <span style={{ fontSize: 9, color: '#7A94B0' }}>{card.timeAgo}</span>
-                                </div>
-                                <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 15, fontWeight: 800, textTransform: 'uppercase', lineHeight: 1.15, color: 'white' }}>
-                                    {card.title}
-                                </h3>
-                            </div>
-                            <Link href={`/noticias/${card.slug}`} style={{ position: 'absolute', inset: 0 }} aria-label={card.title} />
-                        </article>
-                    ))}
-                </div>
-            )}
-
             {/* ── Banner AdSense ── */}
             <AdSlot name="Home - Middle" type="banner" />
 
-            {/* ── Tarjetas pequeñas ── */}
-            {filteredSmall.length > 0 && (
-                <div className="grid gap-[14px] mt-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-auto-fill-200" style={{
-                    gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-                }}>
-                    {filteredSmall.map((card, i) => (
+            {/* ── Grilla unificada de tarjetas ── */}
+            {filteredCards.length > 0 && (
+                <div className="grid gap-[14px] mt-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+                    {filteredCards.map((card, i) => (
                         <article key={card.id} style={{
                             position: 'relative', borderRadius: 10, overflow: 'hidden', cursor: 'pointer',
                             background: '#0B1929', border: '1px solid #1A2D45',
@@ -145,21 +102,32 @@ export const NewsGrid: React.FC<NewsGridProps> = ({ news }) => {
                                 e.currentTarget.style.borderColor = '#1A2D45'
                             }}
                         >
-                            <div style={{ height: 140, background: cardBg(card, i), position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-                                {card.imageUrl
-                                    ? <img src={card.imageUrl} alt={card.title} style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0 }} />
-                                    : <span style={{ fontSize: 48, opacity: 0.2 }}>{card.emoji}</span>
-                                }
-                                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(11,25,41,0.9) 0%, transparent 60%)' }} />
+                            {/* Imagen — aspecto más compacto para que imagen y texto sean equilibrados */}
+                            <div className="relative flex items-center justify-center overflow-hidden"
+                                style={{ background: cardBg(card, i), aspectRatio: '16/8' }}
+                            >
+                                {/* Emoji siempre visible como fallback de fondo */}
+                                <span style={{ fontSize: 48, opacity: 0.2, position: 'relative', zIndex: 0 }}>{card.emoji}</span>
+                                {card.imageUrl && (
+                                    <NextImage
+                                        src={card.imageUrl}
+                                        alt=""
+                                        fill
+                                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 340px"
+                                        style={{ objectFit: 'cover', zIndex: 1 }}
+                                    />
+                                )}
+                                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(11,25,41,0.95) 0%, transparent 55%)', zIndex: 2 }} />
                             </div>
+
                             <div style={{ padding: '12px 14px 16px' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-                                    <span style={{ fontFamily: 'var(--font-display)', fontSize: 9, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', color: '#7A94B0' }}>
+                                    <span style={{ fontFamily: 'var(--font-display)', fontSize: 9, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', color: '#FF6B00' }}>
                                         {card.category}
                                     </span>
                                     <span style={{ fontSize: 9, color: '#2A4060' }}>• {card.timeAgo}</span>
                                 </div>
-                                <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 13, fontWeight: 800, textTransform: 'uppercase', lineHeight: 1.25, color: 'white' }}>
+                                <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 14, fontWeight: 800, textTransform: 'uppercase', lineHeight: 1.3, color: 'white' }}>
                                     {card.title}
                                 </h3>
                             </div>

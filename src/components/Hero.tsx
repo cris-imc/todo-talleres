@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import type { NewsItem } from '../data/mockNews'
 
 interface HeroProps {
@@ -56,14 +57,17 @@ export const Hero: React.FC<HeroProps> = ({ featured }) => {
     const news = featured ?? DEFAULT
 
     return (
-        <article style={{ position: 'relative', height: 520, overflow: 'hidden', cursor: 'pointer' }}>
+        <article className="relative h-[360px] sm:h-[440px] md:h-[520px] overflow-hidden cursor-pointer w-full" style={{ maxWidth: '100vw' }}>
 
             {/* ── Fondo: imagen real o gradiente ── */}
             {news.imageUrl ? (
-                <img
+                <Image
                     src={news.imageUrl}
                     alt={news.title}
-                    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                    fill
+                    priority
+                    style={{ objectFit: 'cover' }}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1440px) 70vw, 1008px"
                 />
             ) : (
                 <div style={{
@@ -107,19 +111,30 @@ export const Hero: React.FC<HeroProps> = ({ featured }) => {
             {/* ── Watermark CAT ── */}
             <div style={{
                 position: 'absolute', right: 24, top: '50%', transform: 'translateY(-50%)',
-                fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: 200,
+                fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: 'min(200px, 30vw)',
                 letterSpacing: -10, color: 'rgba(255,107,0,0.04)',
                 userSelect: 'none', pointerEvents: 'none', lineHeight: 1,
+                overflow: 'hidden',
             }}>
                 CAT
             </div>
 
-            {/* ── Contenido ── */}
-            <div className="max-md:px-5 max-md:pb-8" style={{
-                position: 'relative', zIndex: 2, height: '100%',
-                display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
-                padding: '0 36px 40px', maxWidth: 700,
-            }}>
+            {/* ── Contenido — posicionado absolutamente para garantizar el padding ── */}
+            <div
+                className="relative z-[2]"
+                style={{
+                    position: 'absolute',
+                    inset: 0,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'flex-end',
+                    maxWidth: 780,
+                    paddingLeft: 'clamp(28px, 3.5vw, 36px)',
+                    paddingRight: 'clamp(16px, 3vw, 32px)',
+                    paddingBottom: 'clamp(28px, 5vh, 48px)',
+                    overflow: 'hidden',
+                }}>
+
                 {/* Badges */}
                 <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
                     <span style={{
@@ -141,14 +156,7 @@ export const Hero: React.FC<HeroProps> = ({ featured }) => {
                 </div>
 
                 {/* ── Título — naranja con *asteriscos* o primera palabra por defecto ── */}
-                <h2 style={{
-                    fontFamily: 'var(--font-display)',
-                    fontSize: 'clamp(2rem, 4vw, 3.4rem)',
-                    fontWeight: 900, lineHeight: 0.95,
-                    textTransform: 'uppercase', letterSpacing: 0.5,
-                    marginBottom: 18, color: 'white',
-                    textShadow: '0 2px 20px rgba(0,0,0,0.7)',
-                }}>
+                <h2 className="font-display font-black leading-[1.1] uppercase tracking-wide mb-[14px] text-white drop-shadow-lg text-[1.15rem] sm:text-3xl md:text-5xl lg:text-[3.4rem] w-full" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>
                     {renderTitle(news.title)}
                 </h2>
 
@@ -163,29 +171,29 @@ export const Hero: React.FC<HeroProps> = ({ featured }) => {
 
                 {/* Botones */}
                 <div className="flex flex-col sm:flex-row gap-3">
-                    <Link href={`/noticias/${news.slug}`} className="justify-center" style={{
-                        display: 'inline-flex', alignItems: 'center',
+                    <Link href={`/noticias/${news.slug}`} className="flex justify-center items-center w-full sm:w-auto" style={{
                         background: '#FF6B00', color: 'white',
-                        fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 12,
+                        fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 13,
                         letterSpacing: 1.2, textTransform: 'uppercase',
-                        padding: '12px 24px', borderRadius: 6,
+                        padding: '14px 24px', borderRadius: 6,
                         transition: 'background .2s, transform .2s',
                         boxShadow: '0 4px 20px rgba(255,107,0,0.4)',
+                        textAlign: 'center'
                     }}
                         onMouseOver={e => { e.currentTarget.style.background = '#CC5200'; e.currentTarget.style.transform = 'translateY(-2px)' }}
                         onMouseOut={e => { e.currentTarget.style.background = '#FF6B00'; e.currentTarget.style.transform = 'translateY(0)' }}
                     >
                         Leer Nota Completa →
                     </Link>
-                    <Link href="/noticias" className="justify-center" style={{
-                        display: 'inline-flex', alignItems: 'center',
+                    <Link href="/noticias" className="flex justify-center items-center w-full sm:w-auto" style={{
                         background: 'rgba(255,255,255,0.07)',
                         border: '1px solid rgba(255,255,255,0.2)',
                         color: 'white',
-                        fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 12,
+                        fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 13,
                         letterSpacing: 1.2, textTransform: 'uppercase',
-                        padding: '12px 24px', borderRadius: 6,
+                        padding: '14px 24px', borderRadius: 6,
                         transition: 'background .2s, border-color .2s',
+                        textAlign: 'center'
                     }}
                         onMouseOver={e => { e.currentTarget.style.background = 'rgba(255,107,0,0.15)'; e.currentTarget.style.borderColor = '#FF6B00' }}
                         onMouseOut={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.07)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)' }}

@@ -69,16 +69,8 @@ export const Header: React.FC<HeaderProps> = ({ tickerNews }) => {
             <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 999 }}>
 
                 {/* ── Topbar ── */}
-                <div className="max-md:hidden" style={{
+                <div className="hidden md:flex items-center justify-between px-6 h-[34px] border-b border-[#0D2040] text-[11px] text-[#7A94B0]" style={{
                     background: '#03080F',
-                    borderBottom: '1px solid #0D2040',
-                    height: 34,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '0 24px',
-                    fontSize: 11,
-                    color: '#7A94B0',
                 }}>
                     <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                         <span>📅 {currentDate}</span>

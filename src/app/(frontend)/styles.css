@@ -180,3 +180,53 @@ img {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* ═══════════════════════════════════════
+   LAYOUT RESPONSIVO — MOBILE
+═══════════════════════════════════════ */
+
+/* Padding base del grid de noticias (desktop y mobile) */
+.news-grid-inner {
+  padding: 20px 28px 28px;
+  box-sizing: border-box;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* main-content nunca supera el viewport */
+.main-content {
+  box-sizing: border-box;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Header "Últimas Noticias" base */
+.ultimas-header {
+  padding: 14px 28px;
+}
+
+@media (max-width: 900px) {
+  /* Layout principal: una columna */
+  .main-layout {
+    flex-direction: column !important;
+  }
+
+  /* Sidebar ocupa ancho completo en mobile */
+  .sidebar-col {
+    width: 100% !important;
+    position: relative !important;
+    top: 0 !important;
+    max-height: none !important;
+  }
+
+  /* Grid de noticias: padding lateral reducido en mobile */
+  .news-grid-inner {
+    padding: 16px 14px 24px !important;
+  }
+
+  /* Header "Últimas Noticias": mismo padding lateral que las cards */
+  .ultimas-header {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+}

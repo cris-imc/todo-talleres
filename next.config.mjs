@@ -7,10 +7,29 @@ const nextConfig = {
   eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },
   images: {
+    formats: ['image/avif', 'image/webp'],
+    deviceSizes: [640, 768, 1024, 1280, 1440],
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '3000',
+        pathname: '/api/media/**',
+      },
+      {
+        // Producción en Fly.io
+        protocol: 'https',
+        hostname: '**.fly.dev',
+        pathname: '/api/media/**',
+      },
+      {
+        // Imágenes de TheSportsDB (logos)
+        protocol: 'https',
+        hostname: '**.thesportsdb.com',
       },
     ],
   },

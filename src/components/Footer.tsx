@@ -46,16 +46,8 @@ export const Footer: React.FC = () => {
             borderTop: '3px solid #FF6B00',
             paddingTop: 48,
         }}>
-            <div className="px-5 md:px-8" style={{ maxWidth: 1440, margin: '0 auto' }}>
-                <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: '200px 1fr 1fr 1fr 260px',
-                    gap: 40,
-                    paddingBottom: 40,
-                    borderBottom: '1px solid #1A2D45',
-                }}
-                    className="footer-grid"
-                >
+            <div style={{ maxWidth: 1440, margin: '0 auto', paddingLeft: 'clamp(16px, 4vw, 36px)', paddingRight: 'clamp(16px, 4vw, 36px)' }}>
+                <div className="grid grid-cols-[1fr] sm:grid-cols-[1fr_1fr] lg:grid-cols-[200px_1fr_1fr_1fr_260px] gap-10 pb-10">
                     {/* Brand */}
                     <div>
                         <div style={{ width: 48, height: 54, filter: 'drop-shadow(0 0 10px rgba(0,48,135,0.8))' }}>
@@ -64,19 +56,20 @@ export const Footer: React.FC = () => {
                         <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 900, textTransform: 'uppercase', letterSpacing: 1, marginTop: 14, marginBottom: 6, color: 'white' }}>
                             Talleres de Córdoba
                         </h3>
-                        <p style={{ fontSize: 12, color: '#7A94B0', lineHeight: 1.7, marginBottom: 16 }}>
+                        <p style={{ fontSize: 12, color: '#7A94B0', lineHeight: 1.7, marginBottom: 18 }}>
                             El sitio web de los hincha albiazules. Toda la actualidad del club desde 1913.
                         </p>
-                        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-                            {['X', 'In', 'Fb', 'Yt'].map(sn => (
-                                <Link key={sn} href="#" style={{
+                        {/* Redes sociales */}
+                        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                            {[{sn: 'X', href: '#'}, {sn: 'In', href: '#'}, {sn: 'Fb', href: '#'}, {sn: 'Yt', href: '#'}].map(({sn, href}) => (
+                                <Link key={sn} href={href} style={{
                                     width: 34, height: 34, borderRadius: 8,
                                     background: '#1A2D45',
                                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                    fontSize: 13, fontWeight: 700, color: 'white',
+                                    fontSize: 12, fontWeight: 700, color: 'white',
                                     transition: 'background .2s, transform .2s',
                                 }}
-                                    onMouseOver={e => { e.currentTarget.style.background = '#FF6B00'; e.currentTarget.style.transform = 'translateY(-2px)' }}
+                                    onMouseOver={e => { e.currentTarget.style.background = '#FF6B00'; e.currentTarget.style.transform = 'translateY(-3px)' }}
                                     onMouseOut={e => { e.currentTarget.style.background = '#1A2D45'; e.currentTarget.style.transform = 'translateY(0)' }}
                                 >
                                     {sn}
@@ -161,13 +154,17 @@ export const Footer: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Bottom bar */}
+                {/* Separador explícito — siempre se ve al final del grid, nunca dentro de una columna */}
+                <div style={{ height: 1, background: '#1A2D45', marginTop: 16 }} />
                 <div style={{
-                    padding: '20px 0',
+                    padding: '24px 0',
                     display: 'flex', flexWrap: 'wrap',
-                    justifyContent: 'space-between', alignItems: 'center',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between', alignItems: 'flex-start',
                     gap: 12, fontSize: 11, color: '#7A94B0',
-                }}>
+                }}
+                    className="sm:flex-row sm:items-center"
+                >
                     <p>© {new Date().getFullYear()} Talleres Web — Sitio no oficial. Todos los derechos reservados.</p>
                     <div style={{ display: 'flex', gap: 20 }}>
                         {['Política de Privacidad', 'Aviso Legal', 'Cookies'].map(l => (
@@ -182,14 +179,7 @@ export const Footer: React.FC = () => {
                 </div>
             </div>
 
-            <style>{`
-        @media (max-width: 1024px) {
-          .footer-grid { grid-template-columns: 1fr 1fr !important; }
-        }
-        @media (max-width: 640px) {
-          .footer-grid { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
+
         </footer>
     )
 }

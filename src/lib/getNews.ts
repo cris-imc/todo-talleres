@@ -7,6 +7,14 @@ import { getPayloadClient } from './payload'
 import { mockNews, tickerNews as mockTicker } from '../data/mockNews'
 import type { NewsItem } from '../data/mockNews'
 
+// Convierte URL relativa de Payload (/api/media/...) a URL absoluta
+function toAbsoluteUrl(url: string | undefined | null): string | null {
+    if (!url) return null
+    if (url.startsWith('http')) return url
+    const base = process.env.NEXT_PUBLIC_SERVER_URL ?? 'http://localhost:3000'
+    return `${base}${url}`
+}
+
 // ─── Tipos derivados de Payload ───────────────────────────────────────────────
 export interface CMSNoticia {
     id: string | number
@@ -55,7 +63,7 @@ function cmsToNewsItem(n: CMSNoticia, index: number): NewsItem & { imageUrl: str
         author: n.autor ?? 'Redacción TalleresWeb',
         timeAgo: elapsed(),
         readTime: n.tiempoLectura ?? 4,
-        imageUrl: n.imagen?.url ?? null,
+        imageUrl: toAbsoluteUrl(n.imagen?.url),
     } as NewsItem & { imageUrl: string | null }
 }
 
@@ -206,15 +214,18 @@ const FALLBACK_MATCH: CMSPartido = {
 }
 
 /**
- * Devuelve el próximo partido (estado = "proximo") del CMS.
- * Fallback al partido hardcodeado si el CMS está vacío.
+ * Devuelve el próximo partido del CMS buscando por fecha futura.
+ * — Incluye la ventana de 2 horas mientras el partido puede estar en juego.
+ * — No depende del campo "estado" (que puede no actualizarse en la DB).
  */
 export async function getNextMatch(): Promise<CMSPartido> {
     try {
         const payload = await getPayloadClient()
+        // Ventana: desde 2 horas antes de ahora para incluir partidos en juego
+        const desde = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
         const { docs } = await payload.find({
             collection: 'partidos',
-            where: { estado: { equals: 'proximo' } },
+            where: { fecha: { greater_than: desde } },
             sort: 'fecha',      // el más cercano primero
             limit: 1,
             depth: 1,           // incluye escudoRival si existe
@@ -228,14 +239,16 @@ export async function getNextMatch(): Promise<CMSPartido> {
 }
 
 /**
- * Devuelve todos los partidos próximos para el modal de Fixture.
+ * Devuelve todos los partidos futuros para el modal de Fixture.
+ * También busca por fecha futura para no depender del campo estado.
  */
 export async function getFullFixture(): Promise<CMSPartido[]> {
     try {
         const payload = await getPayloadClient()
+        const desde = new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
         const { docs } = await payload.find({
             collection: 'partidos',
-            where: { estado: { equals: 'proximo' } },
+            where: { fecha: { greater_than: desde } },
             sort: 'fecha',
             limit: 20,
             depth: 1,

@@ -31,7 +31,7 @@ export const InstitucionalLayout: React.FC<InstitucionalLayoutProps> = ({
     const pathname = usePathname()
 
     return (
-        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '40px 24px 80px' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '24px 16px 60px' }} className="sm:p-[40px_24px_80px]">
 
             {/* Breadcrumb */}
             <nav style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 32, fontSize: 12, color: '#7A94B0' }}>
@@ -54,10 +54,10 @@ export const InstitucionalLayout: React.FC<InstitucionalLayoutProps> = ({
                 )}
             </nav>
 
-            <div style={{ display: 'flex', gap: 40, alignItems: 'flex-start' }}>
+            <div className="inst-layout" style={{ display: 'flex', gap: 40, alignItems: 'flex-start' }}>
 
                 {/* Sidebar de navegación */}
-                <aside style={{
+                <aside className="inst-sidebar" style={{
                     width: 240, flexShrink: 0,
                     position: 'sticky', top: 150,
                     alignSelf: 'flex-start',

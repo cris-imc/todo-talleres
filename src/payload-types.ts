@@ -149,12 +149,14 @@ export interface User {
   collection: 'users';
 }
 /**
+ * Biblioteca de imágenes del sitio
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
   id: number;
-  alt: string;
+  alt?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;

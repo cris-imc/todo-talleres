@@ -377,7 +377,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ nextMatch, fixture = [] }) => 
                             <div style={{ textAlign: 'center', flex: 1 }}>
                                 <div style={{ width: 40, height: 40, margin: '0 auto 5px', display: 'flex', alignItems: 'center', justifyContent: 'center', ...(rivalEscudoUrl ? {} : { borderRadius: '50%', background: rivalColor, border: `2px solid ${rivalColor}`, overflow: 'hidden' }) }}>
                                     {rivalEscudoUrl
-                                        ? <img src={rivalEscudoUrl} alt={match.rival} style={{ width: 36, height: 36, objectFit: 'contain' }} />
+                                        ? <img src={rivalEscudoUrl} alt={match.rival} style={{ width: 36, height: 36, objectFit: 'contain' }} onError={(e) => { e.currentTarget.style.display = 'none'; const parent = e.currentTarget.parentElement; if (parent) { parent.style.borderRadius = '50%'; parent.style.background = rivalColor; const span = document.createElement('span'); span.style.cssText = 'font-family:var(--font-display);font-size:10px;font-weight:900;color:white'; span.textContent = rivalCode; parent.appendChild(span); }}} />
                                         : <span style={{ fontFamily: 'var(--font-display)', fontSize: 10, fontWeight: 900, color: 'white' }}>{rivalCode}</span>
                                     }
                                 </div>
@@ -401,7 +401,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ nextMatch, fixture = [] }) => 
                             <div style={{ textAlign: 'center', flex: 1 }}>
                                 <div style={{ width: 40, height: 40, margin: '0 auto 5px', display: 'flex', alignItems: 'center', justifyContent: 'center', ...(rivalEscudoUrl ? {} : { borderRadius: '50%', background: rivalColor, border: `2px solid ${rivalColor}`, overflow: 'hidden' }) }}>
                                     {rivalEscudoUrl
-                                        ? <img src={rivalEscudoUrl} alt={match.rival} style={{ width: 36, height: 36, objectFit: 'contain' }} />
+                                        ? <img src={rivalEscudoUrl} alt={match.rival} style={{ width: 36, height: 36, objectFit: 'contain' }} onError={(e) => { e.currentTarget.style.display = 'none'; const parent = e.currentTarget.parentElement; if (parent) { parent.style.borderRadius = '50%'; parent.style.background = rivalColor; const span = document.createElement('span'); span.style.cssText = 'font-family:var(--font-display);font-size:10px;font-weight:900;color:white'; span.textContent = rivalCode; parent.appendChild(span); }}} />
                                         : <span style={{ fontFamily: 'var(--font-display)', fontSize: 10, fontWeight: 900, color: 'white' }}>{rivalCode}</span>
                                     }
                                 </div>

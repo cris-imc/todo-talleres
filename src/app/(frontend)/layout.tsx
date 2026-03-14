@@ -6,6 +6,8 @@ const barlowCondensed = Barlow_Condensed({
   subsets: ['latin'],
   weight: ['400', '600', '700', '800', '900'],
   variable: '--font-display',
+  display: 'swap',
+  preload: true,
 })
 
 const dmSans = DM_Sans({
@@ -13,6 +15,8 @@ const dmSans = DM_Sans({
   weight: ['400', '500', '700'],
   style: ['normal', 'italic'],
   variable: '--font-body',
+  display: 'swap',
+  preload: true,
 })
 
 export const metadata = {
@@ -25,7 +29,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 
   return (
     <html lang="es" className={`${barlowCondensed.variable} ${dmSans.variable}`}>
-      <body className="font-body text-white bg-navy antialiased">
+      <body className="font-body text-white bg-navy antialiased" style={{ overflowX: 'hidden' }}>
         <main>{children}</main>
       </body>
     </html>

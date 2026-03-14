@@ -1,0 +1,100 @@
+[2m2026-03-07T19:22:31Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m](Use `node --trace-warnings ...` to show where the warning was created)
+[2m2026-03-07T19:27:27Z[0m runner[2861054b796928] [32miad[0m [[33mwarn[0m]Trial machine stopping. To run for longer than 5m0s, add a credit card by visiting https://fly.io/trial.
+[2m2026-03-07T19:27:27Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m][32m INFO[0m Sending signal SIGINT to main child process w/ PID 647
+[2m2026-03-07T19:27:27Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m][32m INFO[0m Main child exited normally with code: 0
+[2m2026-03-07T19:27:27Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m][32m INFO[0m Starting clean up.
+[2m2026-03-07T19:27:27Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m][  301.290688] reboot: Restarting system
+[2m2026-03-07T19:27:46Z[0m proxy[2861054b796928] [32miad[0m [[34minfo[0m]Starting machine
+[2m2026-03-07T19:27:50Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]2026-03-07T19:27:50.520943576 [01KK4P7WYGSPG0KQQ44YBR4M87:main] Running Firecracker v1.12.1
+[2m2026-03-07T19:27:50Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]2026-03-07T19:27:50.521173932 [01KK4P7WYGSPG0KQQ44YBR4M87:main] Listening on API socket ("/fc.sock").
+[2m2026-03-07T19:27:51Z[0m proxy[d8d9293a5d9578] [32miad[0m [[34minfo[0m]Starting machine
+[2m2026-03-07T19:27:51Z[0m app[d8d9293a5d9578] [32miad[0m [[34minfo[0m]2026-03-07T19:27:51.162612846 [01KK4P7WV7VZ1RER358RJ5HE7G:main] Running Firecracker v1.12.1
+[2m2026-03-07T19:27:51Z[0m app[d8d9293a5d9578] [32miad[0m [[34minfo[0m]2026-03-07T19:27:51.162785319 [01KK4P7WV7VZ1RER358RJ5HE7G:main] Listening on API socket ("/fc.sock").
+[2m2026-03-07T19:27:51Z[0m proxy[2861054b796928] [32miad[0m [[34minfo[0m]Starting machine
+[2merror.message=[0m"machines API returned an error: "machine still attempting to start"" [2m2026-03-07T19:27:51Z[0m proxy[2861054b796928] [32miad[0m [[31merror[0m]
+[2m2026-03-07T19:27:51Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m][32m INFO[0m Starting init (commit: 350f2667)...
+[2m2026-03-07T19:27:51Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m][32m INFO[0m Preparing to run: `docker-entrypoint.sh /bin/sh -c HOSTNAME="0.0.0.0" node server.js` as nextjs
+[2m2026-03-07T19:27:51Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m][32m INFO[0m [fly api proxy] listening at /.fly/api
+[2m2026-03-07T19:27:51Z[0m runner[2861054b796928] [32miad[0m [[34minfo[0m]Machine started in 3.519s
+[2m2026-03-07T19:27:52Z[0m app[d8d9293a5d9578] [32miad[0m [[34minfo[0m][32m INFO[0m Starting init (commit: 350f2667)...
+[2m2026-03-07T19:27:52Z[0m app[d8d9293a5d9578] [32miad[0m [[34minfo[0m][32m INFO[0m Preparing to run: `docker-entrypoint.sh /bin/sh -c HOSTNAME="0.0.0.0" node server.js` as nextjs
+[2m2026-03-07T19:27:52Z[0m app[d8d9293a5d9578] [32miad[0m [[34minfo[0m][32m INFO[0m [fly api proxy] listening at /.fly/api
+[2m2026-03-07T19:27:52Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]2026/03/07 19:27:52 INFO SSH listening listen_address=[fdaa:4d:5ef2:a7b:665:fb6e:fcb6:2]:22
+[2m2026-03-07T19:27:52Z[0m runner[d8d9293a5d9578] [32miad[0m [[34minfo[0m]Machine started in 1.063s
+[2m2026-03-07T19:27:52Z[0m proxy[d8d9293a5d9578] [32miad[0m [[34minfo[0m]machine started in 1.18733735s
+[2m2026-03-07T19:27:52Z[0m app[d8d9293a5d9578] [32miad[0m [[34minfo[0m]2026/03/07 19:27:52 INFO SSH listening listen_address=[fdaa:4d:5ef2:a7b:1b8:8e:294d:2]:22
+[2m2026-03-07T19:27:52Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]   ▲ Next.js 15.4.11
+[2m2026-03-07T19:27:52Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]   - Local:        http://localhost:3000
+[2m2026-03-07T19:27:52Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]   - Network:      http://0.0.0.0:3000
+[2m2026-03-07T19:27:52Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m] ✓ Starting...
+[2m2026-03-07T19:27:52Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m] ✓ Ready in 827ms
+[2m2026-03-07T19:27:52Z[0m app[d8d9293a5d9578] [32miad[0m [[34minfo[0m]   ▲ Next.js 15.4.11
+[2m2026-03-07T19:27:52Z[0m app[d8d9293a5d9578] [32miad[0m [[34minfo[0m]   - Local:        http://localhost:3000
+[2m2026-03-07T19:27:52Z[0m app[d8d9293a5d9578] [32miad[0m [[34minfo[0m]   - Network:      http://0.0.0.0:3000
+[2m2026-03-07T19:27:52Z[0m app[d8d9293a5d9578] [32miad[0m [[34minfo[0m] ✓ Starting...
+[2m2026-03-07T19:27:53Z[0m proxy[d8d9293a5d9578] [32miad[0m [[34minfo[0m]machine became reachable in 795.336536ms
+[2m2026-03-07T19:27:53Z[0m app[d8d9293a5d9578] [32miad[0m [[34minfo[0m] ✓ Ready in 780ms
+[2m2026-03-07T19:27:53Z[0m proxy[d8d9293a5d9578] [32miad[0m [[34minfo[0m]machine became reachable in 1.148772805s
+[2m2026-03-07T19:27:55Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m](node:649) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+[2m2026-03-07T19:27:55Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m](Use `node --trace-warnings ...` to show where the warning was created)
+[2m2026-03-07T19:27:56Z[0m app[d8d9293a5d9578] [32miad[0m [[34minfo[0m](node:650) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+[2m2026-03-07T19:27:56Z[0m app[d8d9293a5d9578] [32miad[0m [[34minfo[0m](Use `node --trace-warnings ...` to show where the warning was created)
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m][19:29:44] [31mERROR[39m: [36mError: cannot connect to SQLite: ConnectionFailed("Unable to open connection to local database /app/talleres.db: 14")[39m
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]    err: {
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]      "type": "Error",
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]      "message": "ConnectionFailed(\"Unable to open connection to local database /app/talleres.db: 14\")",
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]      "stack":
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]          Error: ConnectionFailed("Unable to open connection to local database /app/talleres.db: 14")
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]              at new Database (/app/node_modules/@libsql/client/node_modules/libsql/index.js:83:17)
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]              at _createClient (file:///app/node_modules/@libsql/client/lib-esm/sqlite3.js:47:16)
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]              at _createClient (file:///app/node_modules/@libsql/client/lib-esm/node.js:21:16)
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]              at createClient (file:///app/node_modules/@libsql/client/lib-esm/node.js:11:12)
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]              at Object.h [as connect] (/app/.next/server/chunks/8395.js:263:92516)
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]              at bG.init (/app/.next/server/chunks/8395.js:233:8768)
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]              at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]      "code": ""
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]    }
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m][getNews] Fallback a mock data: Error: Error: cannot connect to SQLite: ConnectionFailed("Unable to open connection to local database /app/talleres.db: 14")
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]    at Object.h [as connect] (.next/server/chunks/8395.js:263:93551)
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]    at bG.init (.next/server/chunks/8395.js:233:8768) {
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]  payloadInitError: true
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]}
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m][getFeaturedNews] Fallback a mock: Error: Error: cannot connect to SQLite: ConnectionFailed("Unable to open connection to local database /app/talleres.db: 14")
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]    at Object.h [as connect] (.next/server/chunks/8395.js:263:93551)
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]    at bG.init (.next/server/chunks/8395.js:233:8768) {
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]  payloadInitError: true
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]}
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m][getNextMatch] Fallback: Error: Error: cannot connect to SQLite: ConnectionFailed("Unable to open connection to local database /app/talleres.db: 14")
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]    at Object.h [as connect] (.next/server/chunks/8395.js:263:93551)
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]    at bG.init (.next/server/chunks/8395.js:233:8768) {
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]  payloadInitError: true
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]}
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]undefined
+[2m2026-03-07T19:29:44Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m] ⨯ unhandledRejection:  undefined
+[2m2026-03-07T19:32:51Z[0m runner[2861054b796928] [32miad[0m [[33mwarn[0m]Trial machine stopping. To run for longer than 5m0s, add a credit card by visiting https://fly.io/trial.
+[2m2026-03-07T19:32:51Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m][32m INFO[0m Sending signal SIGINT to main child process w/ PID 649
+[2m2026-03-07T19:32:52Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m][32m INFO[0m Main child exited normally with code: 0
+[2m2026-03-07T19:32:52Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m][32m INFO[0m Starting clean up.
+[2m2026-03-07T19:32:52Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m][  301.274562] reboot: Restarting system
+[2m2026-03-07T19:32:52Z[0m runner[d8d9293a5d9578] [32miad[0m [[33mwarn[0m]Trial machine stopping. To run for longer than 5m0s, add a credit card by visiting https://fly.io/trial.
+[2m2026-03-07T19:32:52Z[0m app[d8d9293a5d9578] [32miad[0m [[34minfo[0m][32m INFO[0m Sending signal SIGINT to main child process w/ PID 650
+[2m2026-03-07T19:32:52Z[0m app[d8d9293a5d9578] [32miad[0m [[34minfo[0m][32m INFO[0m Main child exited normally with code: 0
+[2m2026-03-07T19:32:52Z[0m app[d8d9293a5d9578] [32miad[0m [[34minfo[0m][32m INFO[0m Starting clean up.
+[2m2026-03-07T19:32:52Z[0m app[d8d9293a5d9578] [32miad[0m [[34minfo[0m][  301.249754] reboot: Restarting system
+[2m2026-03-07T19:34:50Z[0m proxy[2861054b796928] [32miad[0m [[34minfo[0m]Starting machine
+[2m2026-03-07T19:34:53Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]2026-03-07T19:34:53.036329553 [01KK4P7WYGSPG0KQQ44YBR4M87:main] Running Firecracker v1.12.1
+[2m2026-03-07T19:34:53Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]2026-03-07T19:34:53.036560530 [01KK4P7WYGSPG0KQQ44YBR4M87:main] Listening on API socket ("/fc.sock").
+[2m2026-03-07T19:34:54Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m][32m INFO[0m Starting init (commit: 350f2667)...
+[2m2026-03-07T19:34:54Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m][32m INFO[0m Preparing to run: `docker-entrypoint.sh /bin/sh -c HOSTNAME="0.0.0.0" node server.js` as nextjs
+[2m2026-03-07T19:34:54Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m][32m INFO[0m [fly api proxy] listening at /.fly/api
+[2m2026-03-07T19:34:54Z[0m runner[2861054b796928] [32miad[0m [[34minfo[0m]Machine started in 2.133s
+[2m2026-03-07T19:34:54Z[0m proxy[2861054b796928] [32miad[0m [[34minfo[0m]machine started in 4.130244011s
+[2m2026-03-07T19:34:54Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]2026/03/07 19:34:54 INFO SSH listening listen_address=[fdaa:4d:5ef2:a7b:665:fb6e:fcb6:2]:22
+[2m2026-03-07T19:34:55Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]   ▲ Next.js 15.4.11
+[2m2026-03-07T19:34:55Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]   - Local:        http://localhost:3000
+[2m2026-03-07T19:34:55Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m]   - Network:      http://0.0.0.0:3000
+[2m2026-03-07T19:34:55Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m] ✓ Starting...
+[2m2026-03-07T19:34:55Z[0m proxy[2861054b796928] [32miad[0m [[34minfo[0m]machine became reachable in 811.406715ms
+[2m2026-03-07T19:34:55Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m] ✓ Ready in 917ms
+[2m2026-03-07T19:34:58Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m](node:647) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+[2m2026-03-07T19:34:58Z[0m app[2861054b796928] [32miad[0m [[34minfo[0m](Use `node --trace-warnings ...` to show where the warning was created)

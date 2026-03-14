@@ -62,3 +62,5 @@ node_modules/
 /scripts/_promiedos_*.json
 /scripts/_promiedos_*.txt
 /scripts/_tables_*.json
+
+next-build*.tar.gz

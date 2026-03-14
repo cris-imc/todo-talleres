@@ -1,0 +1,47 @@
+/* Fix de scroll en Modales/Drawers y Galería de Payload UI en dispositivos móviles */
+@media (max-width: 768px) {
+  /* Habilita el desplazamiento nativo en toda la ventana lateral que se abre */
+  .drawer,
+  .drawer__content,
+  .modal,
+  .modal__content,
+  [class*="drawer__scroll"],
+  [class*="window"],
+  .list-controls,
+  .collection-list {
+    -webkit-overflow-scrolling: touch !important;
+    overflow-y: auto !important;
+    overscroll-behavior-y: contain !important; /* evita que arrastre el fondo */
+    touch-action: pan-y pinch-zoom !important;
+  }
+
+  /* El Drawer suele salir del DOM de forma fija, garantizamos comportamiento local */
+  .drawer__content {
+    max-height: 100vh !important;
+    height: 100% !important;
+  }
+
+  /* Prevenimos que el overlay / drag and drop intercepte el deslizar del dedo */
+  .dropzone {
+    pointer-events: none !important;
+  }
+  .dropzone * {
+    pointer-events: auto !important;
+  }
+  
+  /* Arreglo de lentitud / lag al hacer scroll en grids pesadas (como la galería de medios) */
+  .media-library, 
+  .media-library * {
+    will-change: transform, scroll-position !important;
+    transform: translateZ(0) !important;
+  }
+
+  /* Ocultar el scroll del body principal cuando hay un modal (Payload a veces lo hace a medias) */
+  body.modal-open,
+  body.drawer-open {
+    overflow: hidden !important;
+    position: fixed !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+}

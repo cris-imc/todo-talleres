@@ -14,7 +14,7 @@ export const dynamic = 'force-dynamic'
 export default async function HomePage() {
   // Fetch paralelo: noticias + noticia destacada para el Hero
   const [allNews, featured, nextMatch, fixture] = await Promise.all([
-    getNews(),
+    getNews(48),
     getFeaturedNews(),
     getNextMatch(),
     getFullFixture(),
@@ -38,16 +38,18 @@ export default async function HomePage() {
       >
         {/* ── Columna izquierda: contenido ── */}
         <div className="main-content" style={{ flex: 1, minWidth: 0 }}>
-          {/* Hero: siempre de borde a borde */}
-          <Hero featured={featured} />
+          {/* Hero: mobile-order-1 */}
+          <div className="mobile-order-1 w-full relative z-10">
+            <Hero featured={featured} />
+          </div>
 
-          {/* Banner AdSense */}
-          <div style={{ padding: '0 28px' }} className="ad-slot-top">
+          {/* Banner AdSense: mobile-order-2 */}
+          <div style={{ padding: '0 28px' }} className="ad-slot-top mobile-order-2 w-full relative z-10">
             <AdSlot name="Home - Top Banner" type="banner" />
           </div>
 
-          {/* Cabecera "Últimas Noticias" */}
-          <div id="ultimas-noticias" className="ultimas-header flex items-center justify-between gap-2 flex-wrap" style={{
+          {/* Cabecera "Últimas Noticias": mobile-order-4 */}
+          <div id="ultimas-noticias" className="ultimas-header flex items-center justify-between gap-2 flex-wrap mobile-order-4 w-full relative z-10" style={{
             borderBottom: '1px solid #1A2D45',
             scrollMarginTop: 140,
           }}>
@@ -73,12 +75,14 @@ export default async function HomePage() {
             </Link>
           </div>
 
-          <NewsGrid news={allNews} />
+          <div className="mobile-order-5 w-full relative z-10">
+            <NewsGrid news={allNews} />
+          </div>
         </div>
 
-        {/* ── Columna derecha: sidebar fijo ── */}
+        {/* ── Columna derecha: sidebar fijo (mobile-order-3 en responsive) ── */}
         <div
-          className="sidebar-col"
+          className="sidebar-col mobile-order-3 z-10"
           style={{
             width: 340,
             flexShrink: 0,

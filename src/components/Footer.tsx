@@ -170,14 +170,24 @@ export const Footer: React.FC = () => {
                 >
                     <p>© {new Date().getFullYear()} Todo Talleres — Sitio no oficial. Todos los derechos reservados.</p>
                     <div style={{ display: 'flex', gap: 20 }}>
-                        {['Política de Privacidad', 'Aviso Legal', 'Cookies'].map(l => (
-                            <Link key={l} href="#" style={{ color: '#7A94B0', transition: 'color .2s' }}
-                                onMouseOver={e => e.currentTarget.style.color = 'white'}
-                                onMouseOut={e => e.currentTarget.style.color = '#7A94B0'}
-                            >
-                                {l}
-                            </Link>
-                        ))}
+                        <Link href="/politica-de-privacidad" style={{ color: '#7A94B0', transition: 'color .2s' }}
+                            onMouseOver={e => e.currentTarget.style.color = 'white'}
+                            onMouseOut={e => e.currentTarget.style.color = '#7A94B0'}
+                        >
+                            Política de Privacidad
+                        </Link>
+                        <Link href="/aviso-legal" style={{ color: '#7A94B0', transition: 'color .2s' }}
+                            onMouseOver={e => e.currentTarget.style.color = 'white'}
+                            onMouseOut={e => e.currentTarget.style.color = '#7A94B0'}
+                        >
+                            Aviso Legal
+                        </Link>
+                        <Link href="/cookies" style={{ color: '#7A94B0', transition: 'color .2s' }}
+                            onMouseOver={e => e.currentTarget.style.color = 'white'}
+                            onMouseOut={e => e.currentTarget.style.color = '#7A94B0'}
+                        >
+                            Cookies
+                        </Link>
                     </div>
                 </div>
             </div>

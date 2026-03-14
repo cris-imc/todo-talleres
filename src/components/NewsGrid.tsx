@@ -26,6 +26,7 @@ const gradients = [
 
 export const NewsGrid: React.FC<NewsGridProps> = ({ news }) => {
     const [activeCategory, setActiveCategory] = useState('Todas')
+    const [currentPage, setCurrentPage] = useState(1)
 
     // Noticias para la grilla: excluimos solo la hero para no duplicarla.
     // Mostramos todos los artículos del CMS sin discriminar por size.
@@ -39,6 +40,10 @@ export const NewsGrid: React.FC<NewsGridProps> = ({ news }) => {
     const filteredCards = activeCategory === 'Todas'
         ? allNews
         : allNews.filter(n => n.category === activeCategory)
+
+    const ITEMS_PER_PAGE = 6
+    const totalPages = Math.ceil(filteredCards.length / ITEMS_PER_PAGE)
+    const paginatedCards = filteredCards.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
 
     const noResults = filteredCards.length === 0
 
@@ -54,7 +59,7 @@ export const NewsGrid: React.FC<NewsGridProps> = ({ news }) => {
                 marginBottom: 20, borderBottom: '1px solid #1A2D45', scrollbarWidth: 'none',
             }}>
                 {categories.map(cat => (
-                    <button key={cat} onClick={() => setActiveCategory(cat)} style={{
+                    <button key={cat} onClick={() => { setActiveCategory(cat); setCurrentPage(1); }} style={{
                         flexShrink: 0,
                         fontFamily: 'var(--font-display)', fontSize: 11, fontWeight: 700,
                         letterSpacing: 1, textTransform: 'uppercase',
@@ -85,7 +90,7 @@ export const NewsGrid: React.FC<NewsGridProps> = ({ news }) => {
             {/* ── Grilla unificada de tarjetas ── */}
             {filteredCards.length > 0 && (
                 <div className="grid gap-[14px] mt-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-                    {filteredCards.map((card, i) => (
+                    {paginatedCards.map((card, i) => (
                         <article key={card.id} style={{
                             position: 'relative', borderRadius: 10, overflow: 'hidden', cursor: 'pointer',
                             background: '#0B1929', border: '1px solid #1A2D45',
@@ -134,6 +139,25 @@ export const NewsGrid: React.FC<NewsGridProps> = ({ news }) => {
                             <Link href={`/noticias/${card.slug}`} style={{ position: 'absolute', inset: 0 }} aria-label={card.title} />
                         </article>
                     ))}
+                </div>
+            )}
+
+            {/* ── Paginación cliente ── */}
+            {totalPages > 1 && (
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 16, marginTop: 40 }}>
+                    {currentPage > 1 ? (
+                        <button onClick={() => { setCurrentPage(p => p - 1); document.getElementById('ultimas-noticias')?.scrollIntoView({ behavior: 'smooth' }) }} style={{ padding: '10px 20px', background: '#1A2D45', borderRadius: 8, color: 'white', fontWeight: 700, fontSize: 13, border: 'none', cursor: 'pointer', transition: 'background .2s', fontFamily: 'var(--font-display)', textTransform: 'uppercase', letterSpacing: 1 }}>
+                            ← Anteriores
+                        </button>
+                    ) : <span style={{ padding: '10px 20px', background: 'transparent', color: 'transparent', userSelect: 'none' }}>← Anteriores</span>}
+                    
+                    <span style={{ color: '#7A94B0', fontSize: 13, fontWeight: 700 }}>{currentPage} de {totalPages}</span>
+
+                    {currentPage < totalPages ? (
+                        <button onClick={() => { setCurrentPage(p => p + 1); document.getElementById('ultimas-noticias')?.scrollIntoView({ behavior: 'smooth' }) }} style={{ padding: '10px 20px', background: '#1A2D45', borderRadius: 8, color: 'white', fontWeight: 700, fontSize: 13, border: 'none', cursor: 'pointer', transition: 'background .2s', fontFamily: 'var(--font-display)', textTransform: 'uppercase', letterSpacing: 1 }}>
+                            Siguientes →
+                        </button>
+                    ) : <span style={{ padding: '10px 20px', background: 'transparent', color: 'transparent', userSelect: 'none' }}>Siguientes →</span>}
                 </div>
             )}
         </div>

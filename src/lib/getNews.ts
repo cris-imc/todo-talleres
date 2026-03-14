@@ -11,7 +11,7 @@ import type { NewsItem } from '../data/mockNews'
 function toAbsoluteUrl(url: string | undefined | null): string | null {
     if (!url) return null
     if (url.startsWith('http')) return url
-    const base = process.env.NEXT_PUBLIC_SERVER_URL ?? 'http://localhost:3000'
+    const base = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
     return `${base}${url}`
 }
 
@@ -70,22 +70,52 @@ function cmsToNewsItem(n: CMSNoticia, index: number): NewsItem & { imageUrl: str
 // ─── Funciones públicas ───────────────────────────────────────────────────────
 
 /**
- * Devuelve todas las noticias del CMS (últimas 20).
+ * Devuelve todas las noticias del CMS (por defecto límite 8 para home y modales).
  * Si la DB está vacía, devuelve los datos mock como fallback.
  */
-export async function getNews(): Promise<(NewsItem & { imageUrl: string | null })[]> {
+export async function getNews(limit = 8): Promise<(NewsItem & { imageUrl: string | null })[]> {
     try {
         const payload = await getPayloadClient()
         const { docs } = await payload.find({
             collection: 'noticias',
-            limit: 20,
+            limit,
             sort: '-createdAt',
+            depth: 1,
         })
         if (docs.length === 0) return mockNews.map((n, i) => ({ ...n, imageUrl: null }))
         return (docs as unknown as CMSNoticia[]).map(cmsToNewsItem)
     } catch (e) {
         console.error('[getNews] Fallback a mock data:', e)
         return mockNews.map((n, i) => ({ ...n, imageUrl: null }))
+    }
+}
+
+/**
+ * Devuelve las noticias de forma paginada para la vista principal de archivo.
+ */
+export async function getPaginatedNews(page = 1, limit = 12) {
+    try {
+        const payload = await getPayloadClient()
+        const res = await payload.find({
+            collection: 'noticias',
+            limit,
+            page,
+            sort: '-createdAt',
+            depth: 1,
+        })
+        if (res.docs.length === 0) {
+            return { docs: mockNews.map((n, i) => ({ ...n, imageUrl: null })), page: 1, totalPages: 1, hasNextPage: false, hasPrevPage: false }
+        }
+        return {
+            docs: (res.docs as unknown as CMSNoticia[]).map(cmsToNewsItem),
+            page: res.page ?? 1,
+            totalPages: res.totalPages ?? 1,
+            hasNextPage: res.hasNextPage,
+            hasPrevPage: res.hasPrevPage
+        }
+    } catch (e) {
+        console.error('[getPaginatedNews] Fallback a mock data:', e)
+        return { docs: mockNews.map((n, i) => ({ ...n, imageUrl: null })), page: 1, totalPages: 1, hasNextPage: false, hasPrevPage: false }
     }
 }
 
@@ -162,6 +192,7 @@ export async function getRelatedNews(
             },
             limit,
             sort: '-createdAt',
+            depth: 1,
         })
         return (docs as unknown as CMSNoticia[]).map(cmsToNewsItem)
     } catch {

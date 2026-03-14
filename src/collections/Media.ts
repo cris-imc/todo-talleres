@@ -8,7 +8,7 @@ const dirname = path.dirname(filename)
 // Ruta absoluta a /media desde la raíz del proyecto
 const MEDIA_DIR =
   process.env.NODE_ENV === 'production'
-    ? '/var/data/media'
+    ? '/home/ubuntu/todo-talleres/media'
     : path.resolve(dirname, '..', '..', 'media')
 
 export const Media: CollectionConfig = {

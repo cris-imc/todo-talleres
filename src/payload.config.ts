@@ -29,9 +29,8 @@ export default buildConfig({
   },
   db: sqliteAdapter({
     client: {
-      url: process.env.NODE_ENV === 'production'
-        ? 'file:/var/data/talleres.db'
-        : `file:${path.resolve(dirname, '..', 'talleres.db')}`,
+      url: process.env.DATABASE_URL ||
+        `file:${path.resolve(dirname, '..', 'talleres.db')}`,
     },
   }),
   sharp,

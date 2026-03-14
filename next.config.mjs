@@ -3,7 +3,7 @@ import { withPayload } from '@payloadcms/next/withPayload'
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Your Next.js config here
-  output: 'standalone',
+
   eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },
   images: {
@@ -21,9 +21,9 @@ const nextConfig = {
         pathname: '/api/media/**',
       },
       {
-        // Producción en Fly.io
-        protocol: 'https',
-        hostname: '**.fly.dev',
+        // Producción en Oracle Cloud
+        protocol: 'http',
+        hostname: '159.112.130.22',
         pathname: '/api/media/**',
       },
       {

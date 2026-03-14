@@ -1,50 +1,48 @@
-/* Fix Definitivo de Scroll y Tablas en Payload UI para Celulares */
-@media (max-width: 768px) {
-  
-  /* 1. Modal / Radix Dialog / Drawer global reset */
-  [role="dialog"],
-  [data-state="open"],
-  .drawer, 
+/* FIX EXTREMO PARA iOS / SAFARI SCROLL LOCK EN MODALES */
+@media (max-width: 1024px) {
+
+  /* 
+    Safari suele congelarse cuando un modal fijo o absoluto 
+    trata de scrollear contenido virtualizado. 
+    Usamos translate transform para crear un nuevo contexto 
+    de apilamiento (GPU Layering) que fuerza a Safari a scrollear.
+  */
+  .drawer,
   .drawer__content,
-  .drawer__scroll-container,
-  .modal__content {
-    -webkit-overflow-scrolling: touch !important;
-    overflow-y: auto !important;
-    touch-action: pan-y !important;
-    overscroll-behavior-y: contain !important;
-    pointer-events: auto !important;
-  }
-
-  /* 2. El listado de imágenes específico que enviaste (tabla, filas, wrappers virtuales) */
+  .modal,
+  .modal__content,
   .table-wrapper,
-  .table-layout,
-  [class*="table"],
-  [class*="Table"],
   .collection-list,
-  .collection-list__wrap,
-  [data-radix-scroll-area-viewport],
-  div[style*="overflow"] /* Algunos Virtualized grids inyectan el overflow inline */
-  {
+  .table,
+  .table-layout,
+  .media-library,
+  [role="dialog"],
+  [data-radix-scroll-area-viewport] {
     -webkit-overflow-scrolling: touch !important;
-    touch-action: pan-x pan-y !important; /* Permitir X e Y explícitamente */
+    /* Scroll explícito en vez de auto */
+    overflow-y: scroll !important;
+    /* Aceleración de Hardware (Destraba iOS Safari) */
+    transform: translate3d(0,0,0) !important;
+    /* Permitimos gestos táctiles automáticos */
+    touch-action: auto !important; 
     pointer-events: auto !important;
+    /* Nos aseguramos de que no queden fuera del alto del teléfono */
+    max-height: 100vh !important;
+    max-height: 100dvh !important;
   }
 
-  /* 3. Forzar eventos táctiles en las celdas y listas */
-  tr, td, th, table, tbody, li, ul, 
-  .cell, .row {
-    touch-action: manipulation !important;
-  }
-
-  /* 4. Evitar que las cajas arrastables rompan el scroll */
-  [draggable="true"],
-  .dropzone {
-    touch-action: pan-y !important;
+  /* 
+    Radix UI (la base de Payload dialogs) bloquea el body con "data-scroll-locked".
+    En iOS Mobile, eso congela incluso a los hijos. Lo desactivamos a la fuerza:
+  */
+  html, body {
+    overflow: visible !important;
+    -webkit-overflow-scrolling: touch !important;
   }
   
-  /* 5. Asegurar height correcto para que haya scroll (si no hacedor a 100vh se rompe) */
-  .drawer__content {
-    max-height: 100vh !important;
-    height: 100dvh !important;
+  body[data-scroll-locked] {
+    position: static !important;
+    overflow: visible !important;
+    touch-action: auto !important;
   }
 }

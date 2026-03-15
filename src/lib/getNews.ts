@@ -7,12 +7,18 @@ import { getPayloadClient } from './payload'
 import { mockNews, tickerNews as mockTicker } from '../data/mockNews'
 import type { NewsItem } from '../data/mockNews'
 
-// Convierte URL relativa de Payload (/api/media/...) a URL absoluta
+// Devuelve URLs de media del propio servidor como relativas (/api/media/...)
+// para que <NextImage> las sirva como asset local sin remotePatterns.
+// URLs externas (http/https) se devuelven tal cual.
 function toAbsoluteUrl(url: string | undefined | null): string | null {
     if (!url) return null
-    if (url.startsWith('http')) return url
-    const base = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
-    return `${base}${url}`
+    // Si ya es URL relativa de nuestro propio servidor, la devolvemos relativa
+    if (url.startsWith('/')) return url
+    // Si es absoluta con nuestro dominio, extraemos el path para hacerla relativa
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? ''
+    if (siteUrl && url.startsWith(siteUrl)) return url.slice(siteUrl.length) || '/'
+    // URLs externas (TheSportsDB, Unsplash, etc.) se devuelven tal cual
+    return url
 }
 
 // ─── Tipos derivados de Payload ───────────────────────────────────────────────

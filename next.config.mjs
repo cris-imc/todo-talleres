@@ -21,9 +21,15 @@ const nextConfig = {
         pathname: '/api/media/**',
       },
       {
-        // Producción en Oracle Cloud
+        // Producción en Oracle Cloud (IP directa)
         protocol: 'http',
         hostname: '159.112.130.22',
+        pathname: '/api/media/**',
+      },
+      {
+        // Producción con dominio HTTPS
+        protocol: 'https',
+        hostname: 'todotalleres.com',
         pathname: '/api/media/**',
       },
       {

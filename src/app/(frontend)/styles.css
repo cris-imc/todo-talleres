@@ -169,6 +169,7 @@ img {
   width: 100%;
 }
 
+
 /* Reveal utility para IntersectionObserver */
 .reveal {
   opacity: 0;

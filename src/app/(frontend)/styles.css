@@ -169,6 +169,11 @@ img {
   width: 100%;
 }
 
+/* Ocultar espacios vacíos de AdSense cuando no hay anuncios disponibles */
+ins.adsbygoogle[data-ad-status="unfilled"] {
+  display: none !important;
+}
+
 
 /* Reveal utility para IntersectionObserver */
 .reveal {

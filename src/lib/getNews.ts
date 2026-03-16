@@ -4,6 +4,7 @@
  */
 
 import { getPayloadClient } from './payload'
+import { unstable_cache } from 'next/cache'
 import { mockNews, tickerNews as mockTicker } from '../data/mockNews'
 import type { NewsItem } from '../data/mockNews'
 
@@ -33,6 +34,7 @@ export interface CMSNoticia {
     autor?: string
     tiempoLectura?: number
     imagen?: { url: string; alt?: string } | null
+    videoUrl?: string | null
     createdAt: string
 }
 
@@ -79,51 +81,57 @@ function cmsToNewsItem(n: CMSNoticia, index: number): NewsItem & { imageUrl: str
  * Devuelve todas las noticias del CMS (por defecto límite 8 para home y modales).
  * Si la DB está vacía, devuelve los datos mock como fallback.
  */
-export async function getNews(limit = 8): Promise<(NewsItem & { imageUrl: string | null })[]> {
-    try {
-        const payload = await getPayloadClient()
-        const { docs } = await payload.find({
-            collection: 'noticias',
-            limit,
-            sort: '-createdAt',
-            depth: 1,
-        })
-        if (docs.length === 0) return mockNews.map((n, i) => ({ ...n, imageUrl: null }))
-        return (docs as unknown as CMSNoticia[]).map(cmsToNewsItem)
-    } catch (e) {
-        console.error('[getNews] Fallback a mock data:', e)
-        return mockNews.map((n, i) => ({ ...n, imageUrl: null }))
-    }
-}
+export const getNews = unstable_cache(
+    async (limit = 8): Promise<(NewsItem & { imageUrl: string | null })[]> => {
+        try {
+            const payload = await getPayloadClient()
+            const { docs } = await payload.find({
+                collection: 'noticias',
+                limit,
+                sort: '-createdAt',
+                depth: 1,
+            })
+            if (docs.length === 0) return mockNews.map(n => ({ ...n, imageUrl: null }))
+            return (docs as unknown as CMSNoticia[]).map(cmsToNewsItem)
+        } catch (e) {
+            console.error('[getNews] Fallback a mock data:', e)
+            return mockNews.map(n => ({ ...n, imageUrl: null }))
+        }
+    },
+    ['getNews'], { revalidate: 60 }
+)
 
 /**
  * Devuelve las noticias de forma paginada para la vista principal de archivo.
  */
-export async function getPaginatedNews(page = 1, limit = 12) {
-    try {
-        const payload = await getPayloadClient()
-        const res = await payload.find({
-            collection: 'noticias',
-            limit,
-            page,
-            sort: '-createdAt',
-            depth: 1,
-        })
-        if (res.docs.length === 0) {
-            return { docs: mockNews.map((n, i) => ({ ...n, imageUrl: null })), page: 1, totalPages: 1, hasNextPage: false, hasPrevPage: false }
+export const getPaginatedNews = unstable_cache(
+    async (page = 1, limit = 12) => {
+        try {
+            const payload = await getPayloadClient()
+            const res = await payload.find({
+                collection: 'noticias',
+                limit,
+                page,
+                sort: '-createdAt',
+                depth: 1,
+            })
+            if (res.docs.length === 0) {
+                return { docs: mockNews.map(n => ({ ...n, imageUrl: null })), page: 1, totalPages: 1, hasNextPage: false, hasPrevPage: false }
+            }
+            return {
+                docs: (res.docs as unknown as CMSNoticia[]).map(cmsToNewsItem),
+                page: res.page ?? 1,
+                totalPages: res.totalPages ?? 1,
+                hasNextPage: res.hasNextPage,
+                hasPrevPage: res.hasPrevPage
+            }
+        } catch (e) {
+            console.error('[getPaginatedNews] Fallback a mock data:', e)
+            return { docs: mockNews.map(n => ({ ...n, imageUrl: null })), page: 1, totalPages: 1, hasNextPage: false, hasPrevPage: false }
         }
-        return {
-            docs: (res.docs as unknown as CMSNoticia[]).map(cmsToNewsItem),
-            page: res.page ?? 1,
-            totalPages: res.totalPages ?? 1,
-            hasNextPage: res.hasNextPage,
-            hasPrevPage: res.hasPrevPage
-        }
-    } catch (e) {
-        console.error('[getPaginatedNews] Fallback a mock data:', e)
-        return { docs: mockNews.map((n, i) => ({ ...n, imageUrl: null })), page: 1, totalPages: 1, hasNextPage: false, hasPrevPage: false }
-    }
-}
+    },
+    ['getPaginatedNews'], { revalidate: 60 }
+)
 
 /**
  * Devuelve la noticia destacada para el Hero.
@@ -161,22 +169,25 @@ export async function getFeaturedNews(): Promise<(NewsItem & { imageUrl: string 
  * Obtiene una noticia específica por su slug.
  * Retorna null si no existe.
  */
-export async function getNewsBySlug(slug: string): Promise<CMSNoticia & { contenido?: unknown } | null> {
-    try {
-        const payload = await getPayloadClient()
-        const { docs } = await payload.find({
-            collection: 'noticias',
-            where: { slug: { equals: slug } },
-            limit: 1,
-            depth: 2,   // incluye imagen anidada
-        })
-        if (docs.length === 0) return null
-        return docs[0] as unknown as CMSNoticia & { contenido?: unknown }
-    } catch (e) {
-        console.error('[getNewsBySlug] Error:', e)
-        return null
-    }
-}
+export const getNewsBySlug = unstable_cache(
+    async (slug: string): Promise<CMSNoticia & { contenido?: unknown } | null> => {
+        try {
+            const payload = await getPayloadClient()
+            const { docs } = await payload.find({
+                collection: 'noticias',
+                where: { slug: { equals: slug } },
+                limit: 1,
+                depth: 2,   // incluye imagen anidada
+            })
+            if (docs.length === 0) return null
+            return docs[0] as unknown as CMSNoticia & { contenido?: unknown }
+        } catch (e) {
+            console.error('[getNewsBySlug] Error:', e)
+            return null
+        }
+    },
+    ['getNewsBySlug'], { revalidate: 60 }
+)
 
 /**
  * Obtiene noticias relacionadas (misma categoría, excluye la actual).
@@ -249,6 +260,31 @@ const FALLBACK_MATCH: CMSPartido = {
     estado: 'proximo',
     codigoRival: 'HUR',
 }
+
+export const getComments = unstable_cache(
+    async (noticiaId: string | number) => {
+        try {
+            const payload = await getPayloadClient()
+            const { docs } = await payload.find({
+                collection: 'comentarios',
+                where: {
+                    and: [
+                        { noticia: { equals: noticiaId } },
+                        { aprobado: { equals: true } }
+                    ]
+                },
+                sort: 'createdAt',
+                limit: 100,
+                depth: 0,
+            })
+            return docs as any[]
+        } catch (e) {
+            console.error('[getComments] Error:', e)
+            return []
+        }
+    },
+    ['getComments'], { revalidate: 60 }
+)
 
 /**
  * Devuelve el próximo partido del CMS buscando por fecha futura.

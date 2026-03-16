@@ -6,10 +6,12 @@ import { Hero } from '../../components/Hero'
 import { Sidebar } from '../../components/Sidebar'
 import { NewsGrid } from '../../components/NewsGrid'
 import { AdSlot } from '../../components/AdSlot'
+import fs from 'fs'
+import path from 'path'
 import { getNews, getFeaturedNews, getNextMatch, getFullFixture } from '../../lib/getNews'
 
-// Sin caché — los cambios del admin se reflejan inmediatamente
-export const dynamic = 'force-dynamic'
+// ISR: Caché súper rápida que se actualiza por detrás cada 60 segundos
+export const revalidate = 60
 
 export default async function HomePage() {
   // Fetch paralelo: noticias + noticia destacada para el Hero
@@ -19,6 +21,14 @@ export default async function HomePage() {
     getNextMatch(),
     getFullFixture(),
   ])
+
+  let leagueData = null
+  try {
+    const jsonPath = path.join(process.cwd(), 'src', 'data', 'leagueTable.json')
+    leagueData = JSON.parse(fs.readFileSync(jsonPath, 'utf8'))
+  } catch (err) {
+    console.error('No se pudo cargar leagueTable.json:', err)
+  }
 
   return (
     <>
@@ -45,7 +55,7 @@ export default async function HomePage() {
 
           {/* Banner AdSense: mobile-order-2 */}
           <div style={{ padding: '0 28px' }} className="ad-slot-top mobile-order-2 w-full relative z-10">
-            <AdSlot name="Home - Top Banner" type="banner" />
+            <AdSlot name="Home - Top Banner" type="banner" slotId="1807649764" />
           </div>
 
           {/* Cabecera "Últimas Noticias": mobile-order-4 */}
@@ -96,7 +106,7 @@ export default async function HomePage() {
             scrollbarColor: '#1A2D45 transparent',
           }}
         >
-          <Sidebar nextMatch={nextMatch} fixture={fixture} />
+          <Sidebar nextMatch={nextMatch} fixture={fixture} leagueData={leagueData} />
         </div>
       </div>
 

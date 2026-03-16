@@ -29,6 +29,13 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 
   return (
     <html lang="es" className={`${barlowCondensed.variable} ${dmSans.variable}`}>
+      <head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8595484624493248"
+          crossOrigin="anonymous"
+        ></script>
+      </head>
       <body className="font-body text-white bg-navy antialiased" style={{ overflowX: 'hidden' }}>
         <main>{children}</main>
       </body>

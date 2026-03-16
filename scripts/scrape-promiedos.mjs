@@ -20,7 +20,8 @@ import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const ROOT = path.resolve(__dirname, '..')
-const OUTPUT = path.join(ROOT, 'src', 'data', 'leagueTable.ts')
+const OUTPUT_TS = path.join(ROOT, 'src', 'data', 'leagueTable.ts')
+const OUTPUT_JSON = path.join(ROOT, 'src', 'data', 'leagueTable.json')
 
 const TABLA_URL = 'https://www.promiedos.com.ar/league/liga-profesional/hc'
 const FIXTURE_URL = 'https://www.promiedos.com.ar/team/talleres-cordoba/jche'
@@ -98,8 +99,10 @@ async function scrapeTablas(browser) {
                 if (cells.length < 3) return
                 const pos = parseInt(cells[0])
                 if (isNaN(pos)) return
-                const nombre = cells[1]?.replace(/\s+/g, ' ').trim()
-                if (!nombre) return
+                const nombreRaw = cells[1]?.replace(/\s+/g, ' ').trim()
+                if (!nombreRaw) return
+                // Limpiar marcador en vivo (ej: "Talleres 0-0" -> "Talleres")
+                const nombre = nombreRaw.replace(/\s+\d+-\d+.*$/, '')
                 if (isPromedios) {
                     const coef = parseFloat(cells[2])
                     const pts = parseInt(cells[3]) || 0
@@ -300,8 +303,16 @@ ${arrayTs('anual', data.anual)}
 // ── TABLA DE PROMEDIOS (coeficiente en "dif", ${data.promedios.length} equipos) ──
 ${arrayTs('promedios', data.promedios)}
 `
-    fs.writeFileSync(OUTPUT, ts, 'utf-8')
-    console.log(`\n📝  leagueTable.ts actualizado: ${OUTPUT}`)
+    fs.writeFileSync(OUTPUT_TS, ts, 'utf-8')
+    console.log(`\n📝  leagueTable.ts actualizado: ${OUTPUT_TS}`)
+
+    // ── GUARDAR EN JSON para el cliente ──
+    try {
+        fs.writeFileSync(OUTPUT_JSON, JSON.stringify(data, null, 2), 'utf-8')
+        console.log(`📝  leagueTable.json actualizado: ${OUTPUT_JSON}`)
+    } catch (e) {
+        console.error('Error guardando JSON', e)
+    }
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────────

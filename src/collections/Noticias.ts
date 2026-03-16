@@ -190,6 +190,14 @@ export const Noticias: CollectionConfig = {
             relationTo: 'media',
         },
         {
+            name: 'videoUrl',
+            type: 'text',
+            label: 'URL de Video (YouTube/Vimeo)',
+            admin: {
+                description: 'Opcional. Si se ingresa una URL de YouTube, se mostrará el reproductor de video en lugar de la imagen de portada en la noticia.',
+            },
+        },
+        {
             name: 'autor',
             type: 'text',
             label: 'Autor',

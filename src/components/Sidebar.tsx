@@ -7,12 +7,11 @@ import Image from 'next/image'
 import type { CMSPartido } from '../lib/matchTypes'
 import { formatMatchDate, formatMatchTime, COMPETENCIA_LABELS, getRivalColor } from '../lib/matchTypes'
 
-import { zonaA, zonaB, anual, promedios } from '../data/leagueTable'
-
 type Tab = 'A' | 'B' | 'Anual' | 'Promedios'
 
 // Convierte el formato de leagueTable al formato interno del sidebar
-function toTabRow(teams: typeof zonaA) {
+function toTabRow(teams: any[]) {
+    if (!teams) return []
     return teams.map((t, i) => ({
         pos: i + 1,
         equipo: t.nombre,
@@ -21,13 +20,6 @@ function toTabRow(teams: typeof zonaA) {
         dif: (t.dif > 0 ? '+' : '') + t.dif,
         isCAT: t.esTalleres,
     }))
-}
-
-const tabsData: Record<Tab, ReturnType<typeof toTabRow>> = {
-    A: toTabRow(zonaA),
-    B: toTabRow(zonaB),
-    Anual: toTabRow(anual),
-    Promedios: toTabRow(promedios),
 }
 
 
@@ -131,8 +123,8 @@ const Modal: React.FC<{ title: string; onClose: () => void; children: React.Reac
 }
 
 // ── Modal tabla completa ──
-const FullTableModal: React.FC<{ tab: Tab; onClose: () => void }> = ({ tab, onClose }) => {
-    const rows = tabsData[tab]
+const FullTableModal: React.FC<{ tab: Tab; onClose: () => void; tabsData: Record<Tab, any[]> }> = ({ tab, onClose, tabsData }) => {
+    const rows = tabsData[tab] || []
     const label = tab === 'A' ? 'Zona A' : tab === 'B' ? 'Zona B' : tab
     return (
         <Modal title={`📊 Tabla de Posiciones — ${label}`} onClose={onClose}>
@@ -241,9 +233,10 @@ const FixtureModal: React.FC<{ onClose: () => void; fixture: CMSPartido[] }> = (
 interface SidebarProps {
     nextMatch?: CMSPartido | null
     fixture?: CMSPartido[]
+    leagueData?: any
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ nextMatch, fixture = [] }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ nextMatch, fixture = [], leagueData }) => {
     const [activeTab, setActiveTab] = useState<Tab>('A')
     const [showTable, setShowTable] = useState(false)
     const [showFixture, setShowFixture] = useState(false)
@@ -278,7 +271,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ nextMatch, fixture = [] }) => 
         return () => clearInterval(id)
     }, [matchDate])
 
-    const rows = tabsData[activeTab]
+    // Cómputo de la tabla de manera dinámica
+    const tabsData = {
+        A: toTabRow(leagueData?.zonaA || []),
+        B: toTabRow(leagueData?.zonaB || []),
+        Anual: toTabRow(leagueData?.anual || []),
+        Promedios: toTabRow(leagueData?.promedios || []),
+    }
+
+    const rows = tabsData[activeTab] || []
 
     // Filas compactas: máx 6, pero siempre incluye Talleres
     const catRow = rows.find(r => r.isCAT)
@@ -299,7 +300,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ nextMatch, fixture = [] }) => 
 
     return (
         <>
-            {showTable && <FullTableModal tab={activeTab} onClose={() => setShowTable(false)} />}
+            {showTable && <FullTableModal tab={activeTab} onClose={() => setShowTable(false)} tabsData={tabsData} />}
             {showFixture && <FixtureModal onClose={() => setShowFixture(false)} fixture={fixture} />}
 
             <aside style={{

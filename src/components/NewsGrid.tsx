@@ -4,6 +4,7 @@ import React, { useState, useMemo } from 'react'
 import Link from 'next/link'
 import NextImage from 'next/image'
 import { AdSlot } from './AdSlot'
+import { renderTitle } from '../lib/renderTitle'
 import { mockNews } from '../data/mockNews'
 import type { NewsItem } from '../data/mockNews'
 
@@ -85,7 +86,7 @@ export const NewsGrid: React.FC<NewsGridProps> = ({ news }) => {
             )}
 
             {/* ── Banner AdSense ── */}
-            <AdSlot name="Home - Middle" type="banner" />
+            <AdSlot name="Home - Middle" type="banner" slotId="9436926020" />
 
             {/* ── Grilla unificada de tarjetas ── */}
             {filteredCards.length > 0 && (
@@ -133,7 +134,7 @@ export const NewsGrid: React.FC<NewsGridProps> = ({ news }) => {
                                     <span style={{ fontSize: 9, color: '#2A4060' }}>• {card.timeAgo}</span>
                                 </div>
                                 <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 14, fontWeight: 800, textTransform: 'uppercase', lineHeight: 1.3, color: 'white' }}>
-                                    {card.title}
+                                    {renderTitle(card.title)}
                                 </h3>
                             </div>
                             <Link href={`/noticias/${card.slug}`} style={{ position: 'absolute', inset: 0 }} aria-label={card.title} />

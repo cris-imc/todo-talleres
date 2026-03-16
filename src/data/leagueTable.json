@@ -1,0 +1,730 @@
+{
+  "zonaA": [
+    {
+      "pos": 1,
+      "nombre": "Vélez",
+      "pj": 10,
+      "pts": 22,
+      "dif": 7,
+      "esTalleres": false
+    },
+    {
+      "pos": 2,
+      "nombre": "Unión",
+      "pj": 9,
+      "pts": 15,
+      "dif": 6,
+      "esTalleres": false
+    },
+    {
+      "pos": 3,
+      "nombre": "Estudiantes",
+      "pj": 9,
+      "pts": 15,
+      "dif": 3,
+      "esTalleres": false
+    },
+    {
+      "pos": 4,
+      "nombre": "Talleres",
+      "pj": 10,
+      "pts": 15,
+      "dif": 1,
+      "esTalleres": true
+    },
+    {
+      "pos": 5,
+      "nombre": "Independiente",
+      "pj": 9,
+      "pts": 14,
+      "dif": 4,
+      "esTalleres": false
+    },
+    {
+      "pos": 6,
+      "nombre": "Platense",
+      "pj": 10,
+      "pts": 14,
+      "dif": 0,
+      "esTalleres": false
+    },
+    {
+      "pos": 7,
+      "nombre": "Boca Jrs.",
+      "pj": 9,
+      "pts": 13,
+      "dif": 4,
+      "esTalleres": false
+    },
+    {
+      "pos": 8,
+      "nombre": "San Lorenzo",
+      "pj": 9,
+      "pts": 13,
+      "dif": 2,
+      "esTalleres": false
+    },
+    {
+      "pos": 9,
+      "nombre": "Defensa",
+      "pj": 9,
+      "pts": 13,
+      "dif": 2,
+      "esTalleres": false
+    },
+    {
+      "pos": 10,
+      "nombre": "Lanús",
+      "pj": 8,
+      "pts": 12,
+      "dif": -2,
+      "esTalleres": false
+    },
+    {
+      "pos": 11,
+      "nombre": "Central Córdoba",
+      "pj": 9,
+      "pts": 9,
+      "dif": -3,
+      "esTalleres": false
+    },
+    {
+      "pos": 12,
+      "nombre": "Gimnasia (M)",
+      "pj": 9,
+      "pts": 9,
+      "dif": -5,
+      "esTalleres": false
+    },
+    {
+      "pos": 13,
+      "nombre": "Instituto",
+      "pj": 9,
+      "pts": 8,
+      "dif": -3,
+      "esTalleres": false
+    },
+    {
+      "pos": 14,
+      "nombre": "Riestra",
+      "pj": 9,
+      "pts": 6,
+      "dif": -3,
+      "esTalleres": false
+    },
+    {
+      "pos": 15,
+      "nombre": "Newell's",
+      "pj": 9,
+      "pts": 3,
+      "dif": -11,
+      "esTalleres": false
+    }
+  ],
+  "zonaB": [
+    {
+      "pos": 1,
+      "nombre": "Ind. Rivadavia",
+      "pj": 10,
+      "pts": 20,
+      "dif": 4,
+      "esTalleres": false
+    },
+    {
+      "pos": 2,
+      "nombre": "Belgrano",
+      "pj": 10,
+      "pts": 19,
+      "dif": 4,
+      "esTalleres": false
+    },
+    {
+      "pos": 3,
+      "nombre": "Central",
+      "pj": 10,
+      "pts": 18,
+      "dif": 5,
+      "esTalleres": false
+    },
+    {
+      "pos": 4,
+      "nombre": "Tigre",
+      "pj": 9,
+      "pts": 16,
+      "dif": 7,
+      "esTalleres": false
+    },
+    {
+      "pos": 5,
+      "nombre": "River",
+      "pj": 9,
+      "pts": 14,
+      "dif": 1,
+      "esTalleres": false
+    },
+    {
+      "pos": 6,
+      "nombre": "Gimnasia",
+      "pj": 10,
+      "pts": 14,
+      "dif": -1,
+      "esTalleres": false
+    },
+    {
+      "pos": 7,
+      "nombre": "Racing",
+      "pj": 9,
+      "pts": 12,
+      "dif": 2,
+      "esTalleres": false
+    },
+    {
+      "pos": 8,
+      "nombre": "Huracán",
+      "pj": 9,
+      "pts": 12,
+      "dif": 0,
+      "esTalleres": false
+    },
+    {
+      "pos": 9,
+      "nombre": "Barracas",
+      "pj": 9,
+      "pts": 12,
+      "dif": 0,
+      "esTalleres": false
+    },
+    {
+      "pos": 10,
+      "nombre": "Argentinos",
+      "pj": 7,
+      "pts": 10,
+      "dif": 1,
+      "esTalleres": false
+    },
+    {
+      "pos": 11,
+      "nombre": "Banfield",
+      "pj": 10,
+      "pts": 10,
+      "dif": -2,
+      "esTalleres": false
+    },
+    {
+      "pos": 12,
+      "nombre": "Sarmiento",
+      "pj": 9,
+      "pts": 10,
+      "dif": -3,
+      "esTalleres": false
+    },
+    {
+      "pos": 13,
+      "nombre": "Atl. Tucumán",
+      "pj": 9,
+      "pts": 6,
+      "dif": -4,
+      "esTalleres": false
+    },
+    {
+      "pos": 14,
+      "nombre": "Aldosivi",
+      "pj": 8,
+      "pts": 4,
+      "dif": -6,
+      "esTalleres": false
+    },
+    {
+      "pos": 15,
+      "nombre": "Estudiantes RC",
+      "pj": 9,
+      "pts": 4,
+      "dif": -10,
+      "esTalleres": false
+    }
+  ],
+  "anual": [
+    {
+      "pos": 1,
+      "nombre": "Vélez",
+      "pj": 10,
+      "pts": 22,
+      "dif": 7,
+      "esTalleres": false
+    },
+    {
+      "pos": 2,
+      "nombre": "Ind. Rivadavia",
+      "pj": 10,
+      "pts": 20,
+      "dif": 4,
+      "esTalleres": false
+    },
+    {
+      "pos": 3,
+      "nombre": "Belgrano",
+      "pj": 10,
+      "pts": 19,
+      "dif": 4,
+      "esTalleres": false
+    },
+    {
+      "pos": 4,
+      "nombre": "Central",
+      "pj": 10,
+      "pts": 18,
+      "dif": 5,
+      "esTalleres": false
+    },
+    {
+      "pos": 5,
+      "nombre": "Tigre",
+      "pj": 9,
+      "pts": 16,
+      "dif": 7,
+      "esTalleres": false
+    },
+    {
+      "pos": 6,
+      "nombre": "Unión",
+      "pj": 9,
+      "pts": 15,
+      "dif": 6,
+      "esTalleres": false
+    },
+    {
+      "pos": 7,
+      "nombre": "Estudiantes",
+      "pj": 9,
+      "pts": 15,
+      "dif": 3,
+      "esTalleres": false
+    },
+    {
+      "pos": 8,
+      "nombre": "Talleres",
+      "pj": 10,
+      "pts": 15,
+      "dif": 1,
+      "esTalleres": true
+    },
+    {
+      "pos": 9,
+      "nombre": "Independiente",
+      "pj": 9,
+      "pts": 14,
+      "dif": 4,
+      "esTalleres": false
+    },
+    {
+      "pos": 10,
+      "nombre": "River",
+      "pj": 9,
+      "pts": 14,
+      "dif": 1,
+      "esTalleres": false
+    },
+    {
+      "pos": 11,
+      "nombre": "Platense",
+      "pj": 10,
+      "pts": 14,
+      "dif": 0,
+      "esTalleres": false
+    },
+    {
+      "pos": 12,
+      "nombre": "Gimnasia",
+      "pj": 10,
+      "pts": 14,
+      "dif": -1,
+      "esTalleres": false
+    },
+    {
+      "pos": 13,
+      "nombre": "Boca Jrs.",
+      "pj": 9,
+      "pts": 13,
+      "dif": 4,
+      "esTalleres": false
+    },
+    {
+      "pos": 14,
+      "nombre": "San Lorenzo",
+      "pj": 9,
+      "pts": 13,
+      "dif": 2,
+      "esTalleres": false
+    },
+    {
+      "pos": 15,
+      "nombre": "Defensa",
+      "pj": 9,
+      "pts": 13,
+      "dif": 2,
+      "esTalleres": false
+    },
+    {
+      "pos": 16,
+      "nombre": "Racing",
+      "pj": 9,
+      "pts": 12,
+      "dif": 2,
+      "esTalleres": false
+    },
+    {
+      "pos": 17,
+      "nombre": "Huracán",
+      "pj": 9,
+      "pts": 12,
+      "dif": 0,
+      "esTalleres": false
+    },
+    {
+      "pos": 18,
+      "nombre": "Barracas",
+      "pj": 9,
+      "pts": 12,
+      "dif": 0,
+      "esTalleres": false
+    },
+    {
+      "pos": 19,
+      "nombre": "Lanús",
+      "pj": 8,
+      "pts": 12,
+      "dif": -2,
+      "esTalleres": false
+    },
+    {
+      "pos": 20,
+      "nombre": "Argentinos",
+      "pj": 7,
+      "pts": 10,
+      "dif": 1,
+      "esTalleres": false
+    },
+    {
+      "pos": 21,
+      "nombre": "Banfield",
+      "pj": 10,
+      "pts": 10,
+      "dif": -2,
+      "esTalleres": false
+    },
+    {
+      "pos": 22,
+      "nombre": "Sarmiento",
+      "pj": 9,
+      "pts": 10,
+      "dif": -3,
+      "esTalleres": false
+    },
+    {
+      "pos": 23,
+      "nombre": "Central Córdoba",
+      "pj": 9,
+      "pts": 9,
+      "dif": -3,
+      "esTalleres": false
+    },
+    {
+      "pos": 24,
+      "nombre": "Gimnasia (M)",
+      "pj": 9,
+      "pts": 9,
+      "dif": -5,
+      "esTalleres": false
+    },
+    {
+      "pos": 25,
+      "nombre": "Instituto",
+      "pj": 9,
+      "pts": 8,
+      "dif": -3,
+      "esTalleres": false
+    },
+    {
+      "pos": 26,
+      "nombre": "Riestra",
+      "pj": 9,
+      "pts": 6,
+      "dif": -3,
+      "esTalleres": false
+    },
+    {
+      "pos": 27,
+      "nombre": "Atl. Tucumán",
+      "pj": 9,
+      "pts": 6,
+      "dif": -4,
+      "esTalleres": false
+    },
+    {
+      "pos": 28,
+      "nombre": "Aldosivi",
+      "pj": 8,
+      "pts": 4,
+      "dif": -6,
+      "esTalleres": false
+    },
+    {
+      "pos": 29,
+      "nombre": "Estudiantes RC",
+      "pj": 9,
+      "pts": 4,
+      "dif": -10,
+      "esTalleres": false
+    },
+    {
+      "pos": 30,
+      "nombre": "Newell's",
+      "pj": 9,
+      "pts": 3,
+      "dif": -11,
+      "esTalleres": false
+    }
+  ],
+  "promedios": [
+    {
+      "pos": 1,
+      "nombre": "Boca Jrs.",
+      "pj": 82,
+      "pts": 142,
+      "dif": 1.732,
+      "esTalleres": false
+    },
+    {
+      "pos": 2,
+      "nombre": "River",
+      "pj": 82,
+      "pts": 137,
+      "dif": 1.671,
+      "esTalleres": false
+    },
+    {
+      "pos": 3,
+      "nombre": "Vélez",
+      "pj": 83,
+      "pts": 138,
+      "dif": 1.663,
+      "esTalleres": false
+    },
+    {
+      "pos": 4,
+      "nombre": "Racing",
+      "pj": 82,
+      "pts": 135,
+      "dif": 1.646,
+      "esTalleres": false
+    },
+    {
+      "pos": 5,
+      "nombre": "Central",
+      "pj": 83,
+      "pts": 131,
+      "dif": 1.578,
+      "esTalleres": false
+    },
+    {
+      "pos": 6,
+      "nombre": "Argentinos",
+      "pj": 80,
+      "pts": 123,
+      "dif": 1.538,
+      "esTalleres": false
+    },
+    {
+      "pos": 7,
+      "nombre": "Independiente",
+      "pj": 82,
+      "pts": 124,
+      "dif": 1.512,
+      "esTalleres": false
+    },
+    {
+      "pos": 8,
+      "nombre": "Lanús",
+      "pj": 81,
+      "pts": 121,
+      "dif": 1.494,
+      "esTalleres": false
+    },
+    {
+      "pos": 9,
+      "nombre": "Huracán",
+      "pj": 82,
+      "pts": 121,
+      "dif": 1.476,
+      "esTalleres": false
+    },
+    {
+      "pos": 10,
+      "nombre": "Estudiantes",
+      "pj": 82,
+      "pts": 120,
+      "dif": 1.463,
+      "esTalleres": false
+    },
+    {
+      "pos": 11,
+      "nombre": "Talleres",
+      "pj": 83,
+      "pts": 121,
+      "dif": 1.458,
+      "esTalleres": true
+    },
+    {
+      "pos": 12,
+      "nombre": "Unión",
+      "pj": 82,
+      "pts": 114,
+      "dif": 1.39,
+      "esTalleres": false
+    },
+    {
+      "pos": 13,
+      "nombre": "Barracas",
+      "pj": 82,
+      "pts": 110,
+      "dif": 1.341,
+      "esTalleres": false
+    },
+    {
+      "pos": 14,
+      "nombre": "San Lorenzo",
+      "pj": 82,
+      "pts": 109,
+      "dif": 1.329,
+      "esTalleres": false
+    },
+    {
+      "pos": 15,
+      "nombre": "Defensa",
+      "pj": 82,
+      "pts": 109,
+      "dif": 1.329,
+      "esTalleres": false
+    },
+    {
+      "pos": 16,
+      "nombre": "Ind. Rivadavia",
+      "pj": 83,
+      "pts": 109,
+      "dif": 1.313,
+      "esTalleres": false
+    },
+    {
+      "pos": 17,
+      "nombre": "Riestra",
+      "pj": 82,
+      "pts": 106,
+      "dif": 1.293,
+      "esTalleres": false
+    },
+    {
+      "pos": 18,
+      "nombre": "Platense",
+      "pj": 83,
+      "pts": 106,
+      "dif": 1.277,
+      "esTalleres": false
+    },
+    {
+      "pos": 19,
+      "nombre": "Tigre",
+      "pj": 82,
+      "pts": 104,
+      "dif": 1.268,
+      "esTalleres": false
+    },
+    {
+      "pos": 20,
+      "nombre": "Belgrano",
+      "pj": 83,
+      "pts": 105,
+      "dif": 1.265,
+      "esTalleres": false
+    },
+    {
+      "pos": 21,
+      "nombre": "Gimnasia",
+      "pj": 83,
+      "pts": 100,
+      "dif": 1.205,
+      "esTalleres": false
+    },
+    {
+      "pos": 22,
+      "nombre": "Instituto",
+      "pj": 82,
+      "pts": 95,
+      "dif": 1.159,
+      "esTalleres": false
+    },
+    {
+      "pos": 23,
+      "nombre": "Central Córdoba",
+      "pj": 82,
+      "pts": 93,
+      "dif": 1.134,
+      "esTalleres": false
+    },
+    {
+      "pos": 24,
+      "nombre": "Atl. Tucumán",
+      "pj": 82,
+      "pts": 90,
+      "dif": 1.098,
+      "esTalleres": false
+    },
+    {
+      "pos": 25,
+      "nombre": "Newell's",
+      "pj": 82,
+      "pts": 85,
+      "dif": 1.037,
+      "esTalleres": false
+    },
+    {
+      "pos": 26,
+      "nombre": "Banfield",
+      "pj": 83,
+      "pts": 86,
+      "dif": 1.036,
+      "esTalleres": false
+    },
+    {
+      "pos": 27,
+      "nombre": "Gimnasia (M)",
+      "pj": 9,
+      "pts": 9,
+      "dif": 1,
+      "esTalleres": false
+    },
+    {
+      "pos": 28,
+      "nombre": "Sarmiento",
+      "pj": 82,
+      "pts": 80,
+      "dif": 0.976,
+      "esTalleres": false
+    },
+    {
+      "pos": 29,
+      "nombre": "Aldosivi",
+      "pj": 40,
+      "pts": 37,
+      "dif": 0.925,
+      "esTalleres": false
+    },
+    {
+      "pos": 30,
+      "nombre": "Estudiantes RC",
+      "pj": 9,
+      "pts": 4,
+      "dif": 0.444,
+      "esTalleres": false
+    }
+  ]
+}

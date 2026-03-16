@@ -72,6 +72,7 @@ export interface Config {
     noticias: Noticia;
     partidos: Partido;
     suscriptores: Suscriptore;
+    comentarios: Comentario;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -84,6 +85,7 @@ export interface Config {
     noticias: NoticiasSelect<false> | NoticiasSelect<true>;
     partidos: PartidosSelect<false> | PartidosSelect<true>;
     suscriptores: SuscriptoresSelect<false> | SuscriptoresSelect<true>;
+    comentarios: ComentariosSelect<false> | ComentariosSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -149,7 +151,7 @@ export interface User {
   collection: 'users';
 }
 /**
- * Biblioteca de imágenes del sitio
+ * Biblioteca de imágenes y videos del sitio
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
@@ -205,6 +207,10 @@ export interface Noticia {
     [k: string]: unknown;
   } | null;
   imagen?: (number | null) | Media;
+  /**
+   * Opcional. Si se ingresa una URL de YouTube, se mostrará el reproductor de video en lugar de la imagen de portada en la noticia.
+   */
+  videoUrl?: string | null;
   autor?: string | null;
   tiempoLectura?: number | null;
   etiquetas?:
@@ -255,6 +261,32 @@ export interface Suscriptore {
   createdAt: string;
 }
 /**
+ * Comentarios de los usuarios en las noticias.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "comentarios".
+ */
+export interface Comentario {
+  id: number;
+  noticia: number | Noticia;
+  nombre: string;
+  comentario: string;
+  /**
+   * Si es null, es un comentario principal.
+   */
+  padre_id?: string | null;
+  /**
+   * Desmarcar para ocultar el comentario.
+   */
+  aprobado?: boolean | null;
+  /**
+   * Token interno del dispositivo del usuario (para edición/borrado).
+   */
+  autor_token?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -297,6 +329,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'suscriptores';
         value: number | Suscriptore;
+      } | null)
+    | ({
+        relationTo: 'comentarios';
+        value: number | Comentario;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -393,6 +429,7 @@ export interface NoticiasSelect<T extends boolean = true> {
   resumen?: T;
   contenido?: T;
   imagen?: T;
+  videoUrl?: T;
   autor?: T;
   tiempoLectura?: T;
   etiquetas?:
@@ -430,6 +467,20 @@ export interface PartidosSelect<T extends boolean = true> {
 export interface SuscriptoresSelect<T extends boolean = true> {
   email?: T;
   origen?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "comentarios_select".
+ */
+export interface ComentariosSelect<T extends boolean = true> {
+  noticia?: T;
+  nombre?: T;
+  comentario?: T;
+  padre_id?: T;
+  aprobado?: T;
+  autor_token?: T;
   updatedAt?: T;
   createdAt?: T;
 }

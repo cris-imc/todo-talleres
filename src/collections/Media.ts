@@ -17,11 +17,11 @@ export const Media: CollectionConfig = {
     read: () => true,
   },
   labels: {
-    singular: 'Imagen',
-    plural: 'Imágenes',
+    singular: 'Archivo Multimedia',
+    plural: 'Archivos Multimedia',
   },
   admin: {
-    description: 'Biblioteca de imágenes del sitio',
+    description: 'Biblioteca de imágenes y videos del sitio',
   },
   fields: [
     {
@@ -33,7 +33,7 @@ export const Media: CollectionConfig = {
   ],
   upload: {
     staticDir: MEDIA_DIR,
-    mimeTypes: ['image/png', 'image/jpeg', 'image/webp', 'image/gif', 'image/svg+xml'],
+    mimeTypes: ['image/png', 'image/jpeg', 'image/webp', 'image/gif', 'image/svg+xml', 'video/mp4', 'video/webm', 'video/ogg'],
     // Sin imageSizes: evita columnas extra en SQLite que requieren migración
   },
 }

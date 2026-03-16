@@ -9,39 +9,7 @@ interface HeroProps {
     featured?: (NewsItem & { imageUrl?: string | null }) | null
 }
 
-/**
- * Parsea el título para marcar en naranja las secciones entre *asteriscos*.
- * Ejemplo: "*FASSI* confirma el inicio" → "FASSI" en naranja, resto en blanco.
- * Si no hay asteriscos, resalta la primera palabra (comportamiento anterior).
- */
-function renderTitle(title: string): React.ReactNode {
-    // Detectar si hay tokens *...*
-    const hasMark = /\*[^*]+\*/.test(title)
-
-    if (hasMark) {
-        // Dividir por los tokens *...*
-        const parts = title.split(/(\*[^*]+\*)/)
-        return parts.map((part, i) => {
-            if (part.startsWith('*') && part.endsWith('*')) {
-                // Texto entre asteriscos → naranja
-                return (
-                    <em key={i} style={{ color: '#FF6B00', fontStyle: 'normal' }}>
-                        {part.slice(1, -1)}{' '}
-                    </em>
-                )
-            }
-            return <span key={i}>{part}</span>
-        })
-    }
-
-    // Fallback: primera palabra en naranja
-    const words = title.split(' ')
-    return words.map((word, i) =>
-        i === 0
-            ? <em key={i} style={{ color: '#FF6B00', fontStyle: 'normal' }}>{word}{' '}</em>
-            : <span key={i}>{word}{' '}</span>
-    )
-}
+import { renderTitle } from '../lib/renderTitle'
 
 // Noticia de fallback si el CMS está vacío
 const DEFAULT: NewsItem & { imageUrl: null } = {

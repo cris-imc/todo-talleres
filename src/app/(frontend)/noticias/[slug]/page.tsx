@@ -4,10 +4,12 @@ import { notFound } from 'next/navigation'
 import { Header } from '../../../../components/Header'
 import { Footer } from '../../../../components/Footer'
 import { ArticleCard } from '../../../../components/NewsCards'
-import { getNewsBySlug, getRelatedNews, getAllSlugs, getNews } from '../../../../lib/getNews'
+import { getNewsBySlug, getRelatedNews, getAllSlugs, getNews, getComments } from '../../../../lib/getNews'
+import { renderTitle } from '../../../../lib/renderTitle'
+import { CommentsSection } from '../../../../components/CommentsSection'
 
-// Sin caché — los cambios del admin se ven inmediatamente
-export const dynamic = 'force-dynamic'
+// ISR: Caché súper rápida que se actualiza por detrás máximo cada 60 segundos
+export const revalidate = 60
 
 export async function generateStaticParams() {
     const slugs = await getAllSlugs()
@@ -71,12 +73,19 @@ function serializeLexical(content: unknown): React.ReactNode {
             case 'horizontalrule':
                 return <hr key={idx} style={{ border: 'none', borderTop: '1px solid #1A2D45', margin: '2em 0' }} />
             case 'upload':
-                if (node.value?.url) return (
-                    <figure key={idx} style={{ margin: '2em 0', borderRadius: 10, overflow: 'hidden' }}>
-                        <img src={node.value.url} alt={node.value.alt ?? ''} style={{ width: '100%', height: 'auto', display: 'block' }} />
-                        {node.value.alt && <figcaption style={{ fontSize: 12, color: '#7A94B0', padding: '8px 0', textAlign: 'center' }}>{node.value.alt}</figcaption>}
-                    </figure>
-                )
+                if (node.value?.url) {
+                    const isVideo = node.value.mimeType?.startsWith('video/')
+                    return (
+                        <figure key={idx} style={{ margin: '2em 0', borderRadius: 10, overflow: 'hidden' }}>
+                            {isVideo ? (
+                                <video src={node.value.url} controls style={{ width: '100%', height: 'auto', display: 'block', maxHeight: 600, background: 'black' }} />
+                            ) : (
+                                <img src={node.value.url} alt={node.value.alt ?? ''} style={{ width: '100%', height: 'auto', display: 'block' }} />
+                            )}
+                            {node.value.alt && <figcaption style={{ fontSize: 12, color: '#7A94B0', padding: '8px 0', textAlign: 'center' }}>{node.value.alt}</figcaption>}
+                        </figure>
+                    )
+                }
                 return null
             default:
                 return children.length ? <React.Fragment key={idx}>{children}</React.Fragment> : null
@@ -89,13 +98,16 @@ export default async function NoticiaPage({ params }: { params: Promise<{ slug: 
     const { slug } = await params
 
     // Fetch todo en paralelo: noticia, noticias del ticker, relacionadas
-    const [noticia, allNews] = await Promise.all([
+    const [noticia, allNews, comments] = await Promise.all([
         getNewsBySlug(slug),
         getNews(),
+        getNewsBySlug(slug).then(n => n?.id ? getComments(n.id) : []),
     ])
     if (!noticia) notFound()
 
     const related = await getRelatedNews(noticia.categoria, slug)
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://todotalleres.com.ar'
+    const articleUrl = `${siteUrl}/noticias/${noticia.slug}`
 
     const fechaFormateada = new Date(noticia.createdAt).toLocaleDateString('es-AR', {
         day: 'numeric', month: 'long', year: 'numeric',
@@ -140,7 +152,7 @@ export default async function NoticiaPage({ params }: { params: Promise<{ slug: 
                         textTransform: 'uppercase', lineHeight: 1.05,
                         letterSpacing: 0.5, color: 'white', marginBottom: 20,
                     }}>
-                        {noticia.titulo}
+                        {renderTitle(noticia.titulo)}
                     </h1>
 
                     <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 16, paddingBottom: 20, borderBottom: '1px solid #1A2D45' }}>
@@ -161,12 +173,21 @@ export default async function NoticiaPage({ params }: { params: Promise<{ slug: 
                         </div>
                         <div style={{ display: 'flex', gap: 12, marginLeft: 'auto', alignItems: 'center' }}>
                             <span style={{ fontSize: 12, color: '#7A94B0' }}>⏱ {noticia.tiempoLectura ?? 4} min de lectura</span>
+                            
                             <a
-                                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(noticia.titulo)}`}
+                                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(articleUrl)}`}
                                 target="_blank" rel="noopener noreferrer"
-                                style={{ fontSize: 11, fontWeight: 700, color: '#7A94B0', border: '1px solid #1A2D45', borderRadius: 6, padding: '5px 10px' }}
+                                style={{ fontSize: 11, fontWeight: 700, color: '#white', background: '#1877F2', borderRadius: 6, padding: '6px 12px', border: 'none', textDecoration: 'none' }}
                             >
-                                𝕏 Compartir
+                                📘 Facebook
+                            </a>
+
+                            <a
+                                href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(articleUrl)}&text=${encodeURIComponent(noticia.titulo)}`}
+                                target="_blank" rel="noopener noreferrer"
+                                style={{ fontSize: 11, fontWeight: 700, color: 'white', background: 'black', border: '1px solid #1A2D45', borderRadius: 6, padding: '6px 12px', textDecoration: 'none' }}
+                            >
+                                𝕏 Postear
                             </a>
                         </div>
                     </div>
@@ -209,6 +230,9 @@ export default async function NoticiaPage({ params }: { params: Promise<{ slug: 
                         ))}
                     </div>
                 )}
+
+                {/* Comentarios */}
+                <CommentsSection noticiaId={noticia.id} initialComments={comments} />
 
                 {/* Relacionadas */}
                 {related.length > 0 && (

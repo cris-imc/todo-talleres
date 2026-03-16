@@ -3,6 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import type { NewsItem } from '../data/mockNews'
+import { renderTitle } from '../lib/renderTitle'
 
 type Article = NewsItem & { imageUrl?: string | null }
 
@@ -43,7 +44,7 @@ export const HeroCard: React.FC<{ article: Article }> = ({ article }) => (
                 textTransform: 'uppercase', lineHeight: 1.05,
                 color: 'white', marginBottom: 12, maxWidth: 600,
             }}>
-                {article.title}
+                {renderTitle(article.title)}
             </h2>
             <p style={{ fontSize: 12, color: '#C8D8EC' }}>
                 <span style={{ color: '#FF6B00', fontWeight: 700 }}>{article.author}</span>
@@ -100,7 +101,7 @@ export const ArticleCard: React.FC<{ article: Article; index: number }> = ({ art
                     fontSize: 14, textTransform: 'uppercase', lineHeight: 1.25,
                     color: 'white', marginBottom: 10,
                 }}>
-                    {article.title}
+                    {renderTitle(article.title)}
                 </h3>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: 11, color: '#7A94B0' }}>
                     <span>{article.author}</span>

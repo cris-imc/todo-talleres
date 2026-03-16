@@ -5,7 +5,8 @@ import { Footer } from '../../../components/Footer'
 import { HeroCard, ArticleCard } from '../../../components/NewsCards'
 import { getNews, getPaginatedNews } from '../../../lib/getNews'
 
-export const dynamic = 'force-dynamic'
+// ISR: Caché súper rápida que se actualiza por detrás cada 60 segundos
+export const revalidate = 60
 
 export const metadata = {
     title: 'Noticias — Talleres de Córdoba',

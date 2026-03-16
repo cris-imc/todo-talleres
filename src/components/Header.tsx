@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation'
 
 import { tickerNews as mockTicker } from '../data/mockNews'
 import type { NewsItem } from '../data/mockNews'
+import { renderTitle } from '../lib/renderTitle'
 
 interface HeaderProps {
     tickerNews?: (NewsItem & { imageUrl?: string | null })[]
@@ -225,7 +226,7 @@ export const Header: React.FC<HeaderProps> = ({ tickerNews }) => {
                                     <span style={{ opacity: 0.55, fontSize: 10, fontFamily: 'var(--font-display)', fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase' }}>
                                         {item.category}
                                     </span>
-                                    <Link href={`/noticias/${item.slug}`} style={{ color: 'white' }}>{item.title}</Link>
+                                    <Link href={`/noticias/${item.slug}`} style={{ color: 'white' }}>{renderTitle(item.title, true)}</Link>
                                 </span>
                             ))}
                         </div>

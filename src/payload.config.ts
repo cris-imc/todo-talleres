@@ -10,6 +10,7 @@ import { Media } from './collections/Media'
 import { Noticias } from './collections/Noticias'
 import { Partidos } from './collections/Partidos'
 import { Suscriptores } from './collections/Suscriptores'
+import { Comentarios } from './collections/Comentarios'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -21,7 +22,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Noticias, Partidos, Suscriptores],
+  collections: [Users, Media, Noticias, Partidos, Suscriptores, Comentarios],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || 'talleres-secret-2026-cat',
   typescript: {
@@ -32,6 +33,7 @@ export default buildConfig({
       url: process.env.DATABASE_URL ||
         `file:${path.resolve(dirname, '..', 'talleres.db')}`,
     },
+    push: true, // Forzamos la actualización automática de la DB en producción para añadir nuevas columnas de forma segura sin borrar datos.
   }),
   sharp,
   plugins: [],
